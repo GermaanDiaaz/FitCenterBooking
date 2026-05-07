@@ -4,17 +4,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@Controller
+import com.salesianostriana.dam.fitcenterbooking.service.ServiceActividad;
+
+import lombok.RequiredArgsConstructor;
+
+@Controller @RequiredArgsConstructor
 public class ControllerActividad {
 
-	@GetMapping ("/Fuchibol")
-	public String actividad(Model model) {
-		model.addAttribute("nombre", "Fuchibol");
-		model.addAttribute("capacidad", 14);
-		model.addAttribute("precio", 15);
+	private final ServiceActividad service;
 
-		//model.addAttribute("url", "https://event.supercell.com/brawlstars/es");
-
-		return "ActividadFuchivol";
-	}
+	@GetMapping("/actividades")
+	public String listarReservas (Model model) {
+		
+		model.addAttribute("listaActividades", service.getLista());		
+		return "ListaActividades";
+}
 }

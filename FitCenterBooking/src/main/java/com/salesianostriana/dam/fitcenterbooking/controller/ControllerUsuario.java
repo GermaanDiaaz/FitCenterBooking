@@ -9,14 +9,14 @@ import com.salesianostriana.dam.fitcenterbooking.service.ServiceUsuario;
 import lombok.RequiredArgsConstructor;
 
 @Controller @RequiredArgsConstructor
-public class ControllerReserva {
-	
+public class ControllerUsuario {
+
 	private final ServiceUsuario service;
 
-	@GetMapping("/reservas")
-	public String listarReservas (Model model) {
-			
-		model.addAttribute("listaReservas", service.getLista());		
-		return "ListaReservas";
+	@GetMapping("/usuarios")
+	public String listarUsuarios (Model model) {
+		
+		model.addAttribute("listaUsuarios", service.getLista());		
+		return "ListaUsuarios";
 	}
 }
