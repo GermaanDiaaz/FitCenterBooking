@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller @RequiredArgsConstructor
 public class ControllerActividad {
-
+	
 	private final ServiceActividad service;
 
 	@GetMapping("/actividades")

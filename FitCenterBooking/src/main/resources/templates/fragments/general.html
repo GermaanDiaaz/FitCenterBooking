@@ -1,20 +1,21 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org">
  	
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
-    <title>General</title>
-
-</head>
 <body>
 	<header th:fragment="cabecera">
-		<h1>Fit Center Booking</h1>
+		<div class="bg-light py-3">
+			<h1 class="text-center">Fit Center Booking</h1>
+		</div>
 	</header>
 	
 	<footer th:fragment="pie">
-		<p>&copy; 2026 Fit_Center_Booking - fitcenterbooking@gmail.com</p>
+		
+		<div class="bg-dark py-3 justify-content-between">
+		    <p class="text-light mb-0">&copy; 2026</p>
+		    <p class="text-light mb-0">Fit_Center_Booking</p>
+		    <p class="text-light mb-0">fitcenterbooking@gmail.com</p>
+		</div>
+
 	</footer>
 	
 </body>

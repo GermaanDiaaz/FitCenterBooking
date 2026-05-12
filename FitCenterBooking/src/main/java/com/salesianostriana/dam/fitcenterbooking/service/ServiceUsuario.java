@@ -12,10 +12,10 @@ public class ServiceUsuario {
 
 	public List<Usuario> getLista() {
 		return Arrays.asList(
-				new Usuario("Germán", "correoger@gmail.com", "123456789"),
-				new Usuario("Manuel", "correomanu@gmail.com", "987654321"),
-				new Usuario("Marta", "correomarta@gmail.com", "112233445"),
-				new Usuario("Gonzalo", "correogonzalo@gmail.com", "998877665")
+				new Usuario(1L, "Germán", "correoger@gmail.com", "123456789"),
+				new Usuario(2L, "Manuel", "correomanu@gmail.com", "987654321"),
+				new Usuario(3L, "Marta", "correomarta@gmail.com", "112233445"),
+				new Usuario(4L, "Gonzalo", "correogonzalo@gmail.com", "998877665")
 				);		
 	}
 }

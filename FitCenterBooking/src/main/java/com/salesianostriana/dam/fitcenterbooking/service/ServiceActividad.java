@@ -12,10 +12,10 @@ public class ServiceActividad {
 
 	public List<Actividad> getLista() {
 		return Arrays.asList(
-				new Actividad("Fútbol", 21, 10),
-				new Actividad("Basket", 14, 11.50),
-				new Actividad("Tenis", 21, 15.50),
-				new Actividad("Voley", 21, 11)
+				new Actividad(1L, "Fútbol", 21, 10),
+				new Actividad(2l, "Basket", 14, 11.50),
+				new Actividad(3l, "Tenis", 21, 15.50),
+				new Actividad(4l, "Voley", 21, 11)
 				);		
 	}
 }

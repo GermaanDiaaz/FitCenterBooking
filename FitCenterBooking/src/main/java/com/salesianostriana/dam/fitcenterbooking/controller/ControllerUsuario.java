@@ -19,4 +19,10 @@ public class ControllerUsuario {
 		model.addAttribute("listaUsuarios", service.getLista());		
 		return "ListaUsuarios";
 	}
+	
+	@GetMapping("/home")
+	public String index (Model model) {
+		
+		return "index";
+	}
 }
