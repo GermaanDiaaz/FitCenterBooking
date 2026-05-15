@@ -22,7 +22,7 @@ public class Usuario {
 	private String email;
 	private String telefono;
 	
-	@Id
+	/*@Id
 	@OneToOne
-	private Reserva reserva;
+	private Reserva reserva;*/
 }

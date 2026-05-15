@@ -23,7 +23,7 @@ public class Actividad {
 	private int capacidad;
 	private double precio;
 	
-	@Id
+	/*@Id
 	@ManyToOne
-	private Reserva reserva;
+	private Reserva reserva;*/
 }

@@ -24,11 +24,11 @@ public class Reserva {
 	private LocalDateTime fecha;
 	private double precioTotal;
 	
-	@Id
+	/*@Id
 	@OneToMany
 	private Actividad actividad;
 	
 	@Id
 	@OneToOne
-	private Usuario usuario;
+	private Usuario usuario;*/
 }

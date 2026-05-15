@@ -2,18 +2,12 @@
 <html xmlns:th="https://www.thymeleaf.org">
  	
 <body>
-	<header th:fragment="cabecera">
-		<div class="bg-light py-3">
-			<h1 class="text-center">Fit Center Booking</h1>
-		</div>
-	</header>
-	
-	<header th:fragment="cabecera" id="cabecera">
+	<header th:fragment="cabecera" id="cabecera" class="sticky-top">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
             <div class="container-fluid">
-                <a class="navbar-brand d-flex align-items-center" href="#">
-                    <img src="../../static/img/Logo2.png" alt="Logo" class="rounded-circle me-2">
-                    <span class="fw-bold">Chiringuito Playa-Cable</span>
+                <a class="navbar-brand d-flex align-items-center w-25 m-0" href="#">
+                    <img th:src="@{/img/Logo3.png}" alt="Logo" class="rounded-circle me-3 ms-5">
+                    <span class="fw-bold">Fit Center Booking</span>
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
@@ -23,21 +17,21 @@
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Inicio</a>
+                            <a class="nav-link active text-info fs-5 me-4" href="#">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Carta</a>
+                            <a class="nav-link fs-5 me-4" href="#">Carta</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Reservar</a>
+                            <a class="nav-link fs-5 me-4" href="#">Reservar</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item fs-5 me-4">
                             <a class="nav-link" href="#">Nosotros</a>
                         </li>
                     </ul>
 
                     <div class="d-flex me-3">
-                        <button type="button" class="btn btn-outline-success d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#miModal">
+                        <button type="button" class="btn btn-outline-info d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#miModal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-person-circle me-1" viewBox="0 0 16 16"><path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/></svg>
                             Login
                         </button>
@@ -47,17 +41,42 @@
         </nav>
 	</header>
 
+	<footer th:fragment="pie" id="pie">
+        <div class="bg-dark text-white pt-2 pb-4 mt-auto">
+            <div class="container text-center text-md-start">
+                <div class="row text-center text-md-start">
+                    
+                    <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                        <div class="d-flex align-items-center justify-content-center justify-content-md-start mb-2">
+                            <img th:src="@{/img/Logo3.png}" alt="Logo" class="rounded-circle me-3 ms-5">
+                            <h5 class="text-uppercase mb-0 fw-bold text-info">Fit Center</h5>
+                        </div>
+                        <p>Tu centro deportivo de confianza. Gestiona tus actividades y reservas con un solo click para alcanzar tus metas.</p>
+                    </div>
 
-	
-	<footer th:fragment="pie">
-		
-		<div class="bg-dark py-3 justify-content-between">
-		    <p class="text-light mb-0">&copy; 2026</p>
-		    <p class="text-light mb-0">Fit_Center_Booking</p>
-		    <p class="text-light mb-0">fitcenterbooking@gmail.com</p>
-		</div>
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                        <h5 class="text-uppercase mb-4 fw-bold text-info">Gestión</h5>
+                        <p><a href="#" class="text-white text-decoration-none">Actividades</a></p>
+                        <p><a href="#" class="text-white text-decoration-none">Mis Reservas</a></p>
+                        <p><a href="#" class="text-white text-decoration-none">Mi Perfil</a></p>
+                    </div>
 
-	</footer>
+                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                        <h5 class="text-uppercase mb-4 fw-bold text-info">Horario</h5>
+                        <p><i class="bi bi-clock"></i> Lun - Vie: 07:00 - 22:00</p>
+                        <p><i class="bi bi-clock"></i> Sábados: 09:00 - 14:00</p>
+                    </div>
+
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                        <h5 class="text-uppercase mb-4 fw-bold text-info">Contacto</h5>
+                        <p>📍 Av. del Deporte, 12, Granada</p>
+                        <p>📧 info@fitcenterbooking.com</p>
+                        <p>📞 +34 958 123 456</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 	
 </body>
 </html>
