@@ -1,0 +1,18 @@
+#cabecera img{
+    width: 15%;
+}
+
+#cabecera a{
+    width: fit-content;
+}
+
+#pie img{
+    width: 15%;
+}
+
+#colorFondo{
+    background-color: #00ffff;
+}
+#colorTexto{
+    color: #00ffff;
+}
