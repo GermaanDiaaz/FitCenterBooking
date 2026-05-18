@@ -2,14 +2,17 @@
     width: 15%;
 }
 
-#cabecera button{
-    border-color: #00ffff;
-}
-
 #cabecera a{
     width: fit-content;
 }
 
 #pie img{
     width: 15%;
+}
+
+#colorFondo{
+    background-color: #00ffff;
+}
+#colorTexto{
+    color: #00ffff;
 }
