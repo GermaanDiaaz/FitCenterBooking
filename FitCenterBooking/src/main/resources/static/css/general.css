@@ -1,3 +1,8 @@
+:root{
+    --bs-info: #3DE0D7;
+    --bs-info-rgb: 61, 224, 215;
+}
+
 #cabecera img{
     width: 15%;
 }
@@ -8,11 +13,4 @@
 
 #pie img{
     width: 15%;
-}
-
-#colorFondo{
-    background-color: #00ffff;
-}
-#colorTexto{
-    color: #00ffff;
 }
