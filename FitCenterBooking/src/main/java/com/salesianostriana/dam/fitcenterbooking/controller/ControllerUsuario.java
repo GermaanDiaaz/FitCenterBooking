@@ -35,4 +35,10 @@ public class ControllerUsuario {
 		return "login";
 	}
 	
+	@GetMapping("/registro")
+	public String registro (Model model) {
+		
+		return "registro";
+	}
+	
 }

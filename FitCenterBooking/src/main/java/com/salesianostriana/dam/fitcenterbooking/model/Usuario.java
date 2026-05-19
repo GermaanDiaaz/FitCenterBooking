@@ -1,9 +1,11 @@
 package com.salesianostriana.dam.fitcenterbooking.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +24,6 @@ public class Usuario {
 	private String email;
 	private String telefono;
 	
-	/*@Id
-	@OneToOne
-	private Reserva reserva;*/
+	@OneToMany(mappedBy = "usuario")
+	private List<Reserva> reservas;
 }

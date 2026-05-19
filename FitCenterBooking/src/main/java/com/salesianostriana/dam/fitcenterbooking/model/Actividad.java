@@ -1,9 +1,11 @@
 package com.salesianostriana.dam.fitcenterbooking.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,7 +25,6 @@ public class Actividad {
 	private int capacidad;
 	private double precio;
 	
-	/*@Id
-	@ManyToOne
-	private Reserva reserva;*/
+	@OneToMany(mappedBy = "actividad")
+	private List<ActividadReserva> reservas;
 }
