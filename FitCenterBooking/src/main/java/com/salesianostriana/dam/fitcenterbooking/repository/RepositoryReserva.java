@@ -1,13 +1,9 @@
 package com.salesianostriana.dam.fitcenterbooking.repository;
 
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.salesianostriana.dam.fitcenterbooking.model.Usuario;
 
-public interface RepositoryUsuario extends JpaRepository<Usuario, Long>{
+public interface RepositoryReserva extends JpaRepository<Usuario, Long>{
 
-	Optional<Usuario> findByEmail(String email);
-	
 }

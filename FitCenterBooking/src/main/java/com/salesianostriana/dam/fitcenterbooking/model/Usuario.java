@@ -23,7 +23,11 @@ public class Usuario {
 	private String nombre;
 	private String email;
 	private String telefono;
+	private String password;
 	
+	private String rol;
+
+
 	@OneToMany(mappedBy = "usuario")
 	private List<Reserva> reservas;
 }

@@ -22,18 +22,21 @@
         <div class="w-50 mx-auto px-4">
             <div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white">
                 <form method="POST" th:action="@{/login}">
+                    <div th:if="${errorLogin}" class="bg-danger w-50 rounded-3 p-2">
+                        <p class="fw-bold text-lisht text-center m-0">El correo o la contraseña no son correctos.</p>
+                    </div>
                     <div class="mb-4 mt-3">
-                        <label for="email" class="form-label mb-3 fs-5">Usuario:</label>
-                        <input type="text" class="form-control form-control-lg" id="email" placeholder="Introduzca su usuario. . ." name="email">
+                        <label for="email" class="form-label mb-3 fs-5">Correo @:</label>
+                        <input type="email" class="form-control form-control-lg" id="email" placeholder="Introduzca su correo electrónico. . ." name="email" required>
                     </div>
                     <div>
                         <label for="pwd" class="form-label mb-3 fs-5">Contraseña:</label>
-                        <input type="password" class="form-control form-control-lg" id="pwd" placeholder="Introduzca su contraseña. . ." name="password">
+                        <input type="password" class="form-control form-control-lg" id="pwd" placeholder="Introduzca su contraseña. . ." name="password" required>
                     </div>
 
                     <div class="d-flex my-3">
                         <p>¿No tienes cuenta?</p>
-                        <a class="ms-2 link-info" href="#">Regístrate aquí</a>
+                        <a class="ms-2 link-info" th:href="@{/registro}">Regístrate aquí</a>
                     </div>
                     
                     <div class="text-center mb-3">
