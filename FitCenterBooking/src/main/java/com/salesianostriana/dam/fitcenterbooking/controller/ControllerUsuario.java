@@ -19,12 +19,12 @@ public class ControllerUsuario {
 
 	private final ServiceUsuario service;
 
-	/*@GetMapping("/usuarios")
+	@GetMapping("/usuarios")
 	public String listarUsuarios (Model model) {
 		
-		model.addAttribute("listaUsuarios", service.getLista());		
-		return "ListaUsuarios";
-	}*/
+		model.addAttribute("listaUsuarios", service.findAll());		
+		return "usuarios";
+	}
 	
 	@GetMapping("/home")
 	public String index (Model model) {

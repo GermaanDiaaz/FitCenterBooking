@@ -14,9 +14,16 @@ public class ControllerActividad {
 	private final ServiceActividad service;
 
 	@GetMapping("/actividades")
-	public String listarReservas (Model model) {
+	public String listarActividades (Model model) {
 		
 		model.addAttribute("listaActividades", service.getLista());		
 		return "ListaActividades";
-}
+	}
+	
+	@GetMapping("/actividad")
+	public String mostrarActividad (Model model) {
+		
+		return "actividad";
+	}
+	
 }

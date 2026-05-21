@@ -16,7 +16,7 @@ public class ControllerReserva {
 	@GetMapping("/reservas")
 	public String listarReservas (Model model) {
 			
-		model.addAttribute("listaReservas", service.getLista());		
+		model.addAttribute("listaReservas", service.findAll());		
 		return "ListaReservas";
 	}
 }
