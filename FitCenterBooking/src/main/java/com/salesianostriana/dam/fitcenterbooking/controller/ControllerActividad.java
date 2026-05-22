@@ -13,11 +13,11 @@ public class ControllerActividad {
 	
 	private final ServiceActividad service;
 
-	@GetMapping("/actividades")
+	@GetMapping({"/", "/actividades"})
 	public String listarActividades (Model model) {
 		
-		model.addAttribute("listaActividades", service.getLista());		
-		return "ListaActividades";
+		model.addAttribute("listaActividades", service.findAll());		
+		return "index";
 	}
 	
 	@GetMapping("/actividad")

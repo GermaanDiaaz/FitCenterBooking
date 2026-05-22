@@ -21,42 +21,26 @@
 		</div>
 		
 		<div class="row justify-content-center g-4 m-3">
-			<!--<div class="col-4 container-fluid rounded-4 bg-warning">
-				<h1 class="text-center" th:text="${nombre}">Yoga</h1>
-				<span class="fs-4 fw-bold text-primary ms-4 mb-3" th:text="${capacidad}">25</span>
-				<span class="fs-4 fw-bold text-primary ms-4 mb-3" th:text="${#numbers.formatDecimal(precio, 1, 2)+' €'}">10€</span>
-			</div>-->
 			
-			<div class="col-md-4 px-4">
+			<div class="col-md-4 px-4" th:each="actividad : ${listaActividades}">
 				<div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white text-center">
-					<h2 class="mb-3 text-info">Yoga</h2>
-					<img th:src="@{/img/Yoga.png}" alt="Yoga" class="rounded-4 mb-3 w-100 h-100 mx-auto">
-					<p class="fw-bold mb-1">Capacidad: 25</p>
-					<p class="fw-bold mb-0">10€/sesión</p>
-					<button type="button" class="btn btn-outline-light mx-auto my-3 w-75">Ver Detalles y Reservar</button>
+
+					<h2 class="mb-3 text-info" th:text="${actividad.nombre}">Yoga</h2>
+					<img th:src="@{/img/Yoga.png}" th:alt="${actividad.nombre}" class="rounded-4 mb-3 w-100 h-100 mx-auto">
+					<p class="fw-bold mb-1">
+						Capacidad: 
+						<span th:text="${actividad.capacidad}">0</span>
+					</p>
+					<p class="fw-bold mb-0">
+						<span th:text="${#numbers.formatDecimal(actividad.precio, 1, 2)}">0.00</span>
+						€/sesión
+					</p>
+
+					<a type="button" class="btn btn-outline-light mx-auto my-3 w-75" th:href="@{/actividad}">Ver Detalles y Reservar</a>
 				</div>
 			</div>
 
-			<div class="col-md-4 px-4">
-				<div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white text-center">
-					<h2 class="mb-3 text-info">Crossfit</h2>
-					<img th:src="@{/img/Crossfit.png}" alt="Crossfit" class="rounded-4 mb-3 w-100 h-100 mx-auto">
-					<p class="fw-bold mb-1">Capacidad: 20</p>
-					<p class="fw-bold mb-0">12,50€/sesión</p>
-
-					<button type="button" class="btn btn-outline-light mx-auto my-3 w-75">Ver Detalles y Reservar</button>
-				</div>
-			</div>
 			
-			<div class="col-md-4 px-4">
-				<div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white text-center">
-					<h2 class="mb-3 text-info">Natación</h2>
-					<img th:src="@{/img/Natacion.png}" alt="Natación" class="rounded-4 mb-3 w-100 h-100 mx-auto">
-					<p class="fw-bold mb-1">Capacidad: 20</p>
-					<p class="fw-bold mb-0">15,25€/sesión</p>
-					<button type="button" class="btn btn-outline-light mx-auto my-3 w-75">Ver Detalles y Reservar</button>
-				</div>
-			</div>
 		</div>
 	</main>
 

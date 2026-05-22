@@ -26,13 +26,6 @@ public class ControllerUsuario {
 		return "usuarios";
 	}
 	
-	@GetMapping("/home")
-	public String index (Model model) {
-		
-		return "index";
-	}
-	
-	
 	@GetMapping("/login")
 	public String login (Model model) {
 		
