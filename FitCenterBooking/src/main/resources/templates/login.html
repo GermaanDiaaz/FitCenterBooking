@@ -22,9 +22,14 @@
         <div class="w-50 mx-auto px-4">
             <div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white">
                 <form method="POST" th:action="@{/login}">
-                    <div th:if="${errorLogin}" class="bg-danger d-inline-block rounded-3 py-2 px-3">
+
+                    <div th:if="${param.error}" class="bg-danger d-inline-block rounded-3 py-2 px-3">
                         <p class="fw-bold text-lisht text-center m-0">El correo o la contraseña no son correctos.</p>
                     </div>
+                    <div th:if="${param.logout}" class="bg-success d-inline-block rounded-3 py-2 px-3">
+                        <p class="fw-bold text-lisht text-center m-0">Has cerrado sesión correctamente.</p>
+                    </div>
+
                     <div class="mb-4 mt-3">
                         <label for="email" class="form-label mb-3 fs-5">Correo @:</label>
                         <input type="email" class="form-control form-control-lg" id="email" placeholder="Introduzca su correo electrónico..." name="username" required>

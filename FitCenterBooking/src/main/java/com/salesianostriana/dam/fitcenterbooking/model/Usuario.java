@@ -51,6 +51,6 @@ public class Usuario implements UserDetails{
 
 	@Override
 	public String getUsername() {
-		return this.email;
+		return this.nombre;
 	}
 }
