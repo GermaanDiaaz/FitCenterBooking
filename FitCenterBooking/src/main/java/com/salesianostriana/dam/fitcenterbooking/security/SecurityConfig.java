@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -20,13 +21,11 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http){
-
         http.authorizeHttpRequests(
                 (authz) -> authz
                     .requestMatchers("/actividad/**").authenticated() 
-                    .requestMatchers("/", "/actividades", "/login", "/registro", "/css/**", "/js/**", "/img/**").permitAll()
-                    .anyRequest()
-                    .permitAll() 
+                    .requestMatchers("/", "/login", "/registro", "/css/**", "/js/**", "/img/**").permitAll()
+                    .anyRequest().permitAll() 
                 )
                 .requestCache(cache -> {
                      HttpSessionRequestCache requestCache = new HttpSessionRequestCache();

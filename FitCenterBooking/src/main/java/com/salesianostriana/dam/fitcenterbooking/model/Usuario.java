@@ -1,8 +1,17 @@
 package com.salesianostriana.dam.fitcenterbooking.model;
 
+import java.util.Collection;
 import java.util.List;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.salesianostriana.dam.fitcenterbooking.security.RolesUsuario;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -16,7 +25,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-public class Usuario {
+public class Usuario implements UserDetails{
 
 	@Id 
 	@GeneratedValue
@@ -27,9 +36,21 @@ public class Usuario {
 	private String telefono;
 	private String password;
 	
-	private String rol;
+	@Enumerated(EnumType.STRING)
+	private RolesUsuario rol;
 
 
 	@OneToMany(mappedBy = "usuario")
 	private List<Reserva> reservas;
+	
+	@Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+		
+        return List.of(new SimpleGrantedAuthority("ROLE_" + this.rol));
+    }
+
+	@Override
+	public String getUsername() {
+		return this.email;
+	}
 }

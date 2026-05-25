@@ -13,7 +13,7 @@ public class ControllerActividad {
 	
 	private final ServiceActividad service;
 
-	@GetMapping({"/", "/actividades"})
+	@GetMapping({"/"})
 	public String listarActividades (Model model) {
 		
 		model.addAttribute("listaActividades", service.findAll());		

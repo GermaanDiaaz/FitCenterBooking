@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
- 	
+<html xmlns:th="https://www.thymeleaf.org"
+	  xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 <body>
+	
 	<header th:fragment="cabecera" id="cabecera" class="sticky-top">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
             <div class="container-fluid">
-                <a class="navbar-brand d-flex align-items-center w-25 m-0" th:href="@{/actividades}">
+                <a class="navbar-brand d-flex align-items-center w-25 m-0" th:href="@{/}">
                     <img th:src="@{/img/Logo3.png}" alt="Logo" class="rounded-circle me-3 ms-5">
                     <span class="fw-bold">Fit Center Booking</span>
                 </a>
@@ -17,16 +18,27 @@
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active fs-5 me-4 text-info" th:href="@{/actividades}">Inicio</a>
+                            <a class="nav-link fs-5 me-4 text-info" th:href="@{/}">Actividades</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link fs-5 me-4" href="#">Actividades</a>
+                        <li class="nav-item" sec:authorize="hasRole('CLIENTE')">
+                            <a class="nav-link fs-5 me-4" th:href="@{/reservas}">Mis Reservas</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link fs-5 me-4" href="#">Reservar</a>
+                        <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
+                            <a class="nav-link dropdown-toggle fs-5 me-4" href="#" id="navbarDropdownGestion" data-bs-toggle="dropdown">Gestión</a>
+                            <ul class="dropdown-menu dropdown-menu-dark bg-dark border-secondary p-0" aria-labelledby="navbarDropdownGestion">
+                                <li>
+                                    <a class="dropdown-item w-100" th:href="@{/usuarios}">Gestión Usuarios</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item w-100" th:href="@{/actividades}">Gestión Actividades</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item w-100" th:href="@{/reservas}">Gestión Reservas</a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item fs-5 me-4">
-                            <a class="nav-link" href="#">Nosotros</a>
+                            <a class="nav-link" th:href="@{/nosotros}">Nosotros</a>
                         </li>
                     </ul>
 

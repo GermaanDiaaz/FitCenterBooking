@@ -1,15 +1,14 @@
 package com.salesianostriana.dam.fitcenterbooking.controller;
 
-import java.util.Optional;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.salesianostriana.dam.fitcenterbooking.model.Usuario;
+import com.salesianostriana.dam.fitcenterbooking.security.RolesUsuario;
 import com.salesianostriana.dam.fitcenterbooking.service.ServiceUsuario;
 
 import lombok.RequiredArgsConstructor;
@@ -18,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 public class ControllerUsuario {
 
 	private final ServiceUsuario service;
+    private final PasswordEncoder encoder;
+
 
 	@GetMapping("/usuarios")
 	public String listarUsuarios (Model model) {
@@ -29,27 +30,10 @@ public class ControllerUsuario {
 	@GetMapping("/login")
 	public String login (Model model) {
 		
+		//model.addAttribute("errorLogin", "El correo o la contraseña no son correctos.");
+
 		return "login";
 	}
-	
-	@PostMapping("/login")
-    public String procesarLogin(@RequestParam("email") String email,
-    							@RequestParam("password") String password,
-    							Model model) {
-        
-		Optional<Usuario> user = service.findByEmail(email);
-
-		if(user.isPresent()) {
-			Usuario usuario = user.get();
-			if(usuario.getPassword().equals(password)) {
-				
-				return "redirect:/home";
-			}
-		}
-		model.addAttribute("errorLogin", "El correo o la contraseña no son correctos.");	
-        return "login"; 
-    }
-	
 	
 	@GetMapping("/registro")
 	public String registro (Model model) {
@@ -63,7 +47,8 @@ public class ControllerUsuario {
 	@PostMapping("/registro")
     public String procesarRegistro(@ModelAttribute("usuario") Usuario newUsuario) {
         
-		newUsuario.setRol("CLIENTE");
+		newUsuario.setRol(RolesUsuario.CLIENTE);
+		newUsuario.setPassword(encoder.encode(newUsuario.getPassword()));
 		service.save(newUsuario);
 		
         return "redirect:/login"; 

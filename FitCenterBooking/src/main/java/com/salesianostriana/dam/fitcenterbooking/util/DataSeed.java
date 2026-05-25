@@ -7,6 +7,7 @@ import com.salesianostriana.dam.fitcenterbooking.model.Actividad;
 import com.salesianostriana.dam.fitcenterbooking.model.Usuario;
 import com.salesianostriana.dam.fitcenterbooking.repository.RepositoryActividad;
 import com.salesianostriana.dam.fitcenterbooking.repository.RepositoryUsuario;
+import com.salesianostriana.dam.fitcenterbooking.security.RolesUsuario;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ public class DataSeed {
                     .nombre("admin")
                     .email("admin@admin.com")
                     .password(encoder.encode("admin"))
-                    .rol("ADMIN")
+                    .rol(RolesUsuario.ADMIN)
                     .telefono("600111222")
                     .build();
             
@@ -43,7 +44,7 @@ public class DataSeed {
                     .nombre("user")
                     .email("user@user.com")
                     .password(encoder.encode("user"))
-                    .rol("CLIENTE")
+                    .rol(RolesUsuario.CLIENTE)
                     .telefono("600333444")
                     .build();
             
