@@ -8,16 +8,24 @@ import com.salesianostriana.dam.fitcenterbooking.service.ServiceActividad;
 
 import lombok.RequiredArgsConstructor;
 
-@Controller @RequiredArgsConstructor
+@Controller 
+@RequiredArgsConstructor
 public class ControllerActividad {
 	
 	private final ServiceActividad service;
 
 	@GetMapping({"/"})
-	public String listarActividades (Model model) {
+	public String index (Model model) {
 		
 		model.addAttribute("listaActividades", service.findAll());		
 		return "index";
+	}
+	
+	@GetMapping({"/actividades"})
+	public String listarActividades (Model model) {
+		
+		model.addAttribute("listaActividades", service.findAll());		
+		return "actividades";
 	}
 	
 	@GetMapping("/actividad")

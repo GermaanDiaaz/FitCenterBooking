@@ -30,6 +30,8 @@ public class Actividad {
 	private String descripcion;
 	private int capacidad;
 	private double precio;
+    private String imagenUrl;
+
 	
 	@OneToMany(mappedBy = "actividad")
 	private List<ActividadReserva> reservas;

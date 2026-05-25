@@ -13,7 +13,8 @@ import com.salesianostriana.dam.fitcenterbooking.service.ServiceUsuario;
 
 import lombok.RequiredArgsConstructor;
 
-@Controller @RequiredArgsConstructor
+@Controller 
+@RequiredArgsConstructor
 public class ControllerUsuario {
 
 	private final ServiceUsuario service;

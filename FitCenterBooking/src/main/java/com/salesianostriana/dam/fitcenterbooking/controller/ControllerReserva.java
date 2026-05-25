@@ -4,19 +4,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.salesianostriana.dam.fitcenterbooking.service.ServiceUsuario;
+import com.salesianostriana.dam.fitcenterbooking.service.ServiceReserva;
 
 import lombok.RequiredArgsConstructor;
 
-@Controller @RequiredArgsConstructor
+@Controller 
+@RequiredArgsConstructor
 public class ControllerReserva {
 	
-	private final ServiceUsuario service;
+	private final ServiceReserva service;
 
 	@GetMapping("/reservas")
 	public String listarReservas (Model model) {
 			
 		model.addAttribute("listaReservas", service.findAll());		
-		return "ListaReservas";
+		return "reservas";
 	}
 }
