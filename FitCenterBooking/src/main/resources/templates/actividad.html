@@ -18,7 +18,7 @@
 	<main class="mb-5">
         <div class="container text-center my-5">
             <div class="d-inline-block bg-dark bg-opacity-75 px-5 py-2 rounded-pill shadow">
-                <h1 class="text-white m-0 fw-bold">Yoga</h1>
+                <h1 class="text-white m-0 fw-bold" th:text="${actividad.nombre}">Yoga</h1>
             </div>
         </div>
         
@@ -30,14 +30,15 @@
                         <h3 class="text-info mb-3 border-bottom border-secondary pb-2">
                             <i class="bi bi-info-circle-fill me-2"></i>Sobre la actividad
                         </h3>
-                        <p class="lead lh-base">
+                        <p class="lead lh-base" th:text="${actividad.descripcion}">
                             Encuentra tu equilibrio perfecto entre cuerpo y mente. En nuestras sesiones de Yoga trabajarás la flexibilidad,
                             la fuerza muscular profunda y la corrección postural a través de asanas (posturas) combinadas con el control de
                             la respiración.
                         </p>
                         
                         <div class="w-50 mt-4 mx-auto">
-                            <img th:src="@{/img/Yoga.png}" alt="Yoga" class="w-100 h-100 rounded-3"></img> 
+                            <img th:src="${not (#strings.isEmpty(actividad.imagenUrl))} ? ${actividad.imagenUrl} : @{/img/Defecto.png}" 
+                            th:alt="${actividad.nombre}" class="w-100 h-100 rounded-3"></img> 
                         </div>
                     </div>
                 </div>
@@ -53,7 +54,10 @@
                                 </div>
                                 <div>
                                     <h5 class="text-white-50 mb-2">Aforo:</h5>
-                                    <p class="fw-bold fs-5">5/25</p>
+                                    <p class="fw-bold fs-5">
+                                        5
+                                        <span th:text="${'/' + actividad.capacidad}">25</span>
+                                    </p>
                                 </div>
                             </div>
                             
@@ -73,7 +77,7 @@
                                 </div>
                                 <div>
                                     <h5 class="text-white-50">Precio/Sesión:</h5>
-                                    <p class="fw-bold fs-5">10€</p>
+                                    <p class="fw-bold fs-5" th:text="${#numbers.formatDecimal(actividad.precio, 1, 2) + '€'}">10€</p>
                                 </div>
                             </div>
                         </div>

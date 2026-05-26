@@ -42,10 +42,13 @@
                     </thead>
                     <tbody>
                         <tr th:each="actividad : ${listaActividades}">
-                            <!--<td class="py-3 ps-3" th:text="${actividad.imagen}">admin</td>-->
+                            <td class="py-3 ps-3 w-auto">
+                                <img th:src="${not (#strings.isEmpty(actividad.imagenUrl))} ? ${actividad.imagenUrl} : @{/img/Defecto.png}" 
+                                    th:alt="${actividad.nombre}" class="rounded-3">
+                            </td>
                             <td class="py-3" th:text="${actividad.id}">admin@admin.com</td>
                             <td class="py-3" th:text="${actividad.nombre}">600 111 222</td>
-                            <td class="py-3" th:text="${actividad.capacidad}">Admin</td>
+                            <td class="py-3" th:text="${actividad.capacidad + ' personas'}">Admin</td>
                             <td class="py-3" th:text="${#numbers.formatDecimal(actividad.precio, 1, 2) + '€'}">Admin</td>
 
                             <td class="py-3 pe-3">
@@ -55,7 +58,6 @@
                                 </div>
                             </td>
                         </tr>
-                        
                     </tbody>
                 </table>
             </div>

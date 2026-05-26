@@ -1,9 +1,13 @@
 package com.salesianostriana.dam.fitcenterbooking.controller;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import com.salesianostriana.dam.fitcenterbooking.model.Actividad;
 import com.salesianostriana.dam.fitcenterbooking.service.ServiceActividad;
 
 import lombok.RequiredArgsConstructor;
@@ -28,8 +32,13 @@ public class ControllerActividad {
 		return "actividades";
 	}
 	
-	@GetMapping("/actividad")
-	public String mostrarActividad (Model model) {
+	@GetMapping("/actividad/{id}")
+	public String mostrarActividad (@PathVariable("id") Long id,Model model) {
+		
+		Actividad a = service.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Actividad no encontrada con el ID: " + id));
+        
+		model.addAttribute("actividad", a);
 		
 		return "actividad";
 	}

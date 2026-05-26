@@ -25,7 +25,9 @@
 				<div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white text-center">
 
 					<h2 class="mb-3 text-info" th:text="${actividad.nombre}">Yoga</h2>
-					<img th:src="@{/img/Yoga.png}" th:alt="${actividad.nombre}" class="rounded-4 mb-3 w-100 h-100 mx-auto">
+					<img th:src="${not (#strings.isEmpty(actividad.imagenUrl))} ? ${actividad.imagenUrl} : @{/img/Defecto.png}" 
+						th:alt="${actividad.nombre}" class="rounded-4 mb-3 w-100 h-100 mx-auto">
+						
 					<p class="fw-bold mb-1">
 						Capacidad: 
 						<span th:text="${actividad.capacidad}">0</span>
@@ -35,7 +37,9 @@
 						€/sesión
 					</p>
 
-					<a type="button" class="btn btn-outline-light mx-auto my-3 w-75" th:href="@{/actividad}">Ver Detalles y Reservar</a>
+					<a type="button" class="btn btn-outline-light mx-auto my-3 w-75" 
+						th:href="@{/actividad/{id}(id=${actividad.id})}">Ver Detalles y Reservar
+					</a>
 				</div>
 			</div>
 

@@ -14,3 +14,9 @@
 #pie img{
     width: 15%;
 }
+
+tbody img{
+    max-width: 65px;
+    min-width: 65px;
+    width: 65px;
+}

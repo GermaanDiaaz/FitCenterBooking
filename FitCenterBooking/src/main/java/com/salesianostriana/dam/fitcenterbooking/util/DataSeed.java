@@ -54,28 +54,33 @@ public class DataSeed {
             
             Actividad yoga = Actividad.builder()
                     .nombre("Yoga")
+                    .descripcion("Conecta cuerpo, mente y respiración mediante posturas físicas, ejercicios de respiración y meditación.")
                     .capacidad(25)
                     .precio(10.00)
+                    .imagenUrl("/img/Yoga.png")
                     .build();
             
             actividadRepo.save(yoga);
             
             Actividad crossfit = Actividad.builder()
                     .nombre("Crossfit")
+                    .descripcion("Entrenamiento de alta intensidad basado en ejercicios funcionales constantemente variados.")
                     .capacidad(20)
                     .precio(12.50)
+                    .imagenUrl("/img/Crossfit.png")
                     .build();
             
             actividadRepo.save(crossfit);
             
             Actividad natacion = Actividad.builder()
                     .nombre("Natacion")
+                    .descripcion("Mejora tu resistencia cardiovascular y tonifica tus músculos en nuestras piscinas climatizadas.")
                     .capacidad(20)
                     .precio(15.25)
+                    .imagenUrl("/img/Natacion.png")
                     .build();
             
             actividadRepo.save(natacion);
-            
             
         }
         
