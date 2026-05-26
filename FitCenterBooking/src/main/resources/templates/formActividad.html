@@ -24,7 +24,7 @@
                 <form method="POST" th:action="@{/actividades/nueva}" th:object="${actividad}">
                     <div class="mb-4 mt-3">
                         <label for="nombre" class="form-label mb-3 fs-5">Nombre: *</label>
-                        <input type="text" class="form-control form-control-lg" id="nombre" placeholder="Introduzca el nombre de la actividad. . ." th:field="*{Actividad.nombre}" required>
+                        <input type="text" class="form-control form-control-lg" id="nombre" placeholder="Introduzca el nombre de la actividad. . ." th:field="*{nombre}" required>
                     </div>
                     <div class="mb-4">
                         <label for="descripcion" class="form-label mb-3 fs-5">Descripción: *</label>
@@ -43,9 +43,9 @@
                         <input type="text" class="form-control form-control-lg" id="imagenUrl" placeholder="Introduzca la URL de la imagen de la actividad. . ." th:field="*{imagenUrl}">
                     </div>
 
-                    <a type="button" class="btn btn-outline-light mx-auto my-3 w-75" 
-						th:href="@{/actividades}">Añadir Actividad
-					</a>
+                    <button type="submit" class="btn btn-info d-block mx-auto my-3 w-75">
+                        Añadir Actividad
+                    </button>
                 </form>
             </div>
         </div>

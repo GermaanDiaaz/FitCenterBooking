@@ -58,4 +58,13 @@ public class ControllerActividad {
 		
         return "redirect:/actividades"; 
     }
+	
+	
+	@GetMapping("/actividades/eliminar/{id}")
+	public String eliminarActividad(@PathVariable("id") Long id) {
+		
+		service.deleteById(id); 
+		
+		return "redirect:/actividades";
+	}
 }

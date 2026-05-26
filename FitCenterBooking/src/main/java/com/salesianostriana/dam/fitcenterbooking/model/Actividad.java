@@ -23,7 +23,6 @@ public class Actividad {
 	@GeneratedValue
 	private Long id;
 	
-	
 	private String nombre;
 	
 	@Lob
