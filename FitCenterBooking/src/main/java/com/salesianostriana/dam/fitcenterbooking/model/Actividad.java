@@ -27,8 +27,8 @@ public class Actividad {
 	
 	@Lob
 	private String descripcion;
-	private int capacidad;
-	private double precio;
+	private Integer capacidad;
+	private Double precio;
     private String imagenUrl;
 
 	

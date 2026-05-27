@@ -3,6 +3,8 @@ package com.salesianostriana.dam.fitcenterbooking.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,8 +26,9 @@ public class Reserva {
 
 	@Id 
 	@GeneratedValue
-	private long codigo;
+	private Long codigo;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime fecha;
 	private double precioTotal;
 	
