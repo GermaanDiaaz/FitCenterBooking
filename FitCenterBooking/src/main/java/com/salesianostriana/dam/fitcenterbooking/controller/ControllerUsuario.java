@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.salesianostriana.dam.fitcenterbooking.model.Actividad;
 import com.salesianostriana.dam.fitcenterbooking.model.Usuario;
 import com.salesianostriana.dam.fitcenterbooking.security.RolesUsuario;
 import com.salesianostriana.dam.fitcenterbooking.service.ServiceUsuario;
@@ -65,4 +64,20 @@ public class ControllerUsuario {
 		return "redirect:/usuarios";
 	}
 	
+	@GetMapping("/usuarios/editar/{id}")
+	public String editarActividad(@PathVariable("id") Long id, Model model) {
+		
+		Usuario u = service.findById(id).get();
+        model.addAttribute("usuario", u);
+		
+		return "formUsuario";
+	}
+	
+	@PostMapping("/usuarios/editar")
+	public String procesarUsuario(@ModelAttribute("usuario") Usuario newUser) {
+		
+		service.edit(newUser);
+		
+		return "redirect:/usuarios";
+	}
 }

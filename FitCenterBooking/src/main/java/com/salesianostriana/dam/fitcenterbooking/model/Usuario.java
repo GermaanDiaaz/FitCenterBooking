@@ -30,7 +30,7 @@ public class Usuario implements UserDetails{
 
 	@Id 
 	@GeneratedValue
-	private long id;
+	private Long id;
 	
 	private String nombre;
 	private String email;

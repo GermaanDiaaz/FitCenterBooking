@@ -1,11 +1,17 @@
 package com.salesianostriana.dam.fitcenterbooking.util;
 
+import java.time.LocalDateTime;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.salesianostriana.dam.fitcenterbooking.model.Actividad;
+import com.salesianostriana.dam.fitcenterbooking.model.ActividadReserva;
+import com.salesianostriana.dam.fitcenterbooking.model.Reserva;
 import com.salesianostriana.dam.fitcenterbooking.model.Usuario;
 import com.salesianostriana.dam.fitcenterbooking.repository.RepositoryActividad;
+import com.salesianostriana.dam.fitcenterbooking.repository.RepositoryActividadReserva;
+import com.salesianostriana.dam.fitcenterbooking.repository.RepositoryReserva;
 import com.salesianostriana.dam.fitcenterbooking.repository.RepositoryUsuario;
 import com.salesianostriana.dam.fitcenterbooking.security.RolesUsuario;
 
@@ -19,12 +25,16 @@ public class DataSeed {
     
     private final RepositoryUsuario usuarioRepo;
     private final RepositoryActividad actividadRepo;
+    private final RepositoryReserva reservaRepo;
+    private final RepositoryActividadReserva actividadReservaRepo;
+
+
     private final PasswordEncoder encoder;
     
     @PostConstruct
     public void init() {
         
-        if (usuarioRepo.count() == 0 && actividadRepo.count() == 0) {
+        if (usuarioRepo.count() == 0 && actividadRepo.count() == 0 && reservaRepo.count() == 0) {
             
             System.out.println("Metemos datos autogenerados.");
             
@@ -81,6 +91,48 @@ public class DataSeed {
                     .build();
             
             actividadRepo.save(natacion);
+            
+            
+            // --------------- Reservas ---------------
+            
+            Reserva reserva1 = Reserva.builder()
+            		.fecha(LocalDateTime.of(2026, 6, 02, 19, 30))
+                    .precioTotal(15.50)
+                    .usuario(cliente)
+                    .build();
+            
+            reservaRepo.save(reserva1);
+            
+            Reserva reserva2 = Reserva.builder()
+            		.fecha(LocalDateTime.of(2026, 6, 10, 19, 30))
+                    .precioTotal(55.50)
+                    .usuario(cliente)
+                    .build();
+            
+            reservaRepo.save(reserva2);
+            
+            // --------------- Relación Intermedia ---------------
+
+            ActividadReserva lineaNatacion = ActividadReserva.builder()
+                    .reserva(reserva1)
+                    .actividad(natacion)
+                    .estado("RESERVADA")
+                    //.observaciones()
+                    .build();
+            
+            actividadReservaRepo.save(lineaNatacion);
+            
+            ActividadReserva lineaYoga = ActividadReserva.builder()
+                    .reserva(reserva1)
+                    .actividad(yoga)
+                    .estado("RESERVADA")
+                    //.observaciones()
+                    .build();
+            
+            actividadReservaRepo.save(lineaYoga);
+            
+            
+            
             
         }
         
