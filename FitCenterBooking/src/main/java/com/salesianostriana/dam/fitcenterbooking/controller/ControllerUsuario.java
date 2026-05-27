@@ -5,8 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.salesianostriana.dam.fitcenterbooking.model.Actividad;
 import com.salesianostriana.dam.fitcenterbooking.model.Usuario;
 import com.salesianostriana.dam.fitcenterbooking.security.RolesUsuario;
 import com.salesianostriana.dam.fitcenterbooking.service.ServiceUsuario;
@@ -54,5 +56,13 @@ public class ControllerUsuario {
 		
         return "redirect:/login"; 
     }
+	
+	@GetMapping("/usuarios/eliminar/{id}")
+	public String eliminarActividad(@PathVariable("id") Long id) {
+		
+		service.deleteById(id); 
+		
+		return "redirect:/usuarios";
+	}
 	
 }

@@ -22,6 +22,9 @@
         <div class="w-50 mx-auto px-4">
             <div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white">
                 <form method="POST" th:action="@{/actividades/nueva}" th:object="${actividad}">
+
+                    <input type="hidden" th:field="*{id}">
+
                     <div class="mb-4 mt-3">
                         <label for="nombre" class="form-label mb-3 fs-5">Nombre: *</label>
                         <input type="text" class="form-control form-control-lg" id="nombre" placeholder="Introduzca el nombre de la actividad. . ." th:field="*{nombre}" required>
@@ -30,20 +33,23 @@
                         <label for="descripcion" class="form-label mb-3 fs-5">Descripción: *</label>
                         <textarea class="form-control form-control-lg" id="descripcion" placeholder="Introduzca una descripción para la actividad. . ." th:field="*{descripcion}" required></textarea>
                     </div>
-                    <div class="mb-4">
-                        <label for="capacidad" class="form-label mb-3 fs-5">Aforo Máximo: *</label>
-                        <input type="text" class="form-control form-control-lg" id="capacidad" placeholder="Introduzca el aforo máximo de la actividad. . ." th:field="*{capacidad}" required>
+                    <div class="d-flex">
+                        <div class="mb-4 me-5">
+                            <label for="capacidad" class="form-label mb-3 fs-5">Aforo Máximo: *</label>
+                            <input type="number" class="form-control form-control-lg" id="capacidad" placeholder="Aforo máximo. . ." th:field="*{capacidad}" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="precio" class="form-label mb-3 fs-5">Precio: *</label>
+                            <input type="text" class="form-control form-control-lg" id="precio" placeholder="00,00. . ." th:field="*{precio}" required>
+                        </div>
                     </div>
-                    <div class="mb-4">
-                        <label for="precio" class="form-label mb-3 fs-5">Precio: *</label>
-                        <input type="text" class="form-control form-control-lg" id="precio" placeholder="Introduzca el precio de la actividad. . ." th:field="*{precio}" required>
-                    </div>
+                    
                     <div class="mb-4">
                         <label for="imagenUrl" class="form-label mb-3 fs-5">URL de la Imagen:</label>
                         <input type="text" class="form-control form-control-lg" id="imagenUrl" placeholder="Introduzca la URL de la imagen de la actividad. . ." th:field="*{imagenUrl}">
                     </div>
 
-                    <button type="submit" class="btn btn-info d-block mx-auto my-3 w-75">
+                    <button type="submit" class="btn btn-info d-block mx-auto my-3 w-75" th:text="${actividad.id != null} ? 'Guardar Cambios' : 'Añadir Actividad'">
                         Añadir Actividad
                     </button>
                 </form>

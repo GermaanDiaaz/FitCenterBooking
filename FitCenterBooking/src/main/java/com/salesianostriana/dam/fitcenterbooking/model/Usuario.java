@@ -27,6 +27,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Usuario implements UserDetails{
 
+
 	@Id 
 	@GeneratedValue
 	private long id;

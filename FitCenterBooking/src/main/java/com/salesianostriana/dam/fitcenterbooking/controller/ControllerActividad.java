@@ -67,4 +67,14 @@ public class ControllerActividad {
 		
 		return "redirect:/actividades";
 	}
+	
+	@GetMapping("/actividades/editar/{id}")
+	public String editarActividad(@PathVariable("id") Long id, Model model) {
+		
+		Actividad a = service.findById(id).get();
+        model.addAttribute("actividad", a);
+		
+		return "formActividad";
+	}
+	
 }
