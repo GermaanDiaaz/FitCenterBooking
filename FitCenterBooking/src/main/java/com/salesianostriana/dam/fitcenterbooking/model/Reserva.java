@@ -35,4 +35,16 @@ public class Reserva {
 
 	@OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL)
 	private List<ActividadReserva> actividades;
+	
+	
+	
+	public void addActividadReserva(ActividadReserva linea) {
+	    if (this.actividades == null) {
+	        this.actividades = new java.util.ArrayList<>();
+	    }
+	    this.actividades.add(linea);
+	    linea.setReserva(this);
+	}
 }
+
+

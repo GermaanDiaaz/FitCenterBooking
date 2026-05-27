@@ -120,6 +120,7 @@ public class DataSeed {
                     //.observaciones()
                     .build();
             
+            reserva1.addActividadReserva(lineaNatacion);
             actividadReservaRepo.save(lineaNatacion);
             
             ActividadReserva lineaYoga = ActividadReserva.builder()
@@ -129,11 +130,9 @@ public class DataSeed {
                     //.observaciones()
                     .build();
             
+            reserva1.addActividadReserva(lineaYoga);
             actividadReservaRepo.save(lineaYoga);
-            
-            
-            
-            
+                    
         }
         
         System.out.println("Datos autogenerados.");
