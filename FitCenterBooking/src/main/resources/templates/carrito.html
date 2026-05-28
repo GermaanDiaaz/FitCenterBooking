@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org">
+ 	
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+    <title>FitCenterBooking</title>
+	
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet"  href="../static/css/general.css" th:href="@{/css/general.css}">
+</head>
+<body class="bg-secondary">
+	<div th:replace="~{fragments/general :: cabecera}"></div>
+
+	<main class="mb-5">
+        <div class="container text-center my-5">
+            <div class="d-inline-block bg-dark bg-opacity-75 px-5 py-2 rounded-pill shadow">
+                <h1 class="text-white m-0 fw-bold">Mi Carrito</h1>
+            </div>
+        </div>
+        
+        <div class="container mx-auto px-4">
+            <div class="row g-4">
+                
+                <div class="col-lg-8">
+                    <div class="card p-4 rounded-4 bg-dark bg-opacity-75 text-white h-100 shadow border-0">
+                        <h3 class="text-info mb-3 border-bottom border-secondary pb-2">
+                            <i class="bi bi-info-circle-fill me-2"></i>
+                            Actividades seleccionadas
+                        </h3>
+
+                        <div th:if="${#lists.isEmpty(listaCarrito)}" class="text-center py-5">
+                            <p class="lead text-secondary">No has añadido ninguna actividad al carrito todavía.</p>
+                            <a th:href="@{/}" class="btn btn-outline-info rounded-pill mt-2">Ver Actividades</a>
+                        </div>
+
+                        <div th:each="a : ${listaCarrito}" class="d-flex align-items-center justify-content-between p-3 mb-3 bg-secondary bg-opacity-25 rounded-3 border border-secondary">
+                            <div class="d-flex align-items-center" id="imgCarrito">
+                                <img th:src="${not (#strings.isEmpty(a.imagenUrl))} ? ${a.imagenUrl} : @{/img/Defecto.png}" 
+                                     th:alt="${a.nombre}" class="rounded-3">
+                                <div class="ms-3">
+                                    <h5 class="mb-1 text-white fw-bold" th:text="${a.nombre}">Nombre</h5>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <p class="fw-bold fs-5 m-0 text-info" th:text="${#numbers.formatDecimal(a.precio, 1, 2) + '€'}">10.00€</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div th:if="${not (#lists.isEmpty(listaCarrito))}" class="col-lg-4">
+                    <div class="card p-4 rounded-4 bg-dark bg-opacity-75 text-white shadow border-0">
+                        <h4 class="text-info mb-4 border-bottom border-secondary pb-2">Resumen de Reserva</h4>
+                        
+                        <form th:action="@{/carrito/confirmar}" method="POST" th:if="${not #lists.isEmpty(listaCarrito)}">
+                            <div class="mb-4">
+                                <label for="fecha" class="form-label text-white-50 fw-bold fs-5">¿Qué día y hora vas a asistir? *</label>
+                                <input type="datetime-local" class="form-control form-control-lg bg-secondary bg-opacity-25 text-white border-secondary mb-5" id="fecha" name="fecha" required>
+                            </div>
+                    
+                            <div class="mb-4">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <h5 class="text-white-50 m-0">Nº Actividades:</h5>
+                                    <p class="fw-bold fs-5 m-0" th:text="${#lists.size(listaCarrito)}">0</p>
+                                </div>
+
+                                <div class="d-flex align-items-center justify-content-between mb-3 border-top border-secondary pt-3">
+                                    <h5 class="text-white m-0">Importe Total:</h5>
+                                    <p class="fw-bold fs-4 text-info m-0" th:text="${#numbers.formatDecimal(totalCarrito, 1, 2) + '€'}">0.00€</p>
+                                </div>
+                            </div>
+                        
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-info btn-lg rounded-pill fw-bold py-2">
+                                    Confirmar y Tramitar Reserva
+                                </button>
+                            </div> 
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
+		</div>
+	</main>
+    
+    <div th:if="${not (#lists.isEmpty(listaCarrito))}" th:replace="~{fragments/general :: pie}"></div>
+</body>
+</html>

@@ -32,8 +32,6 @@ public class ControllerUsuario {
 	@GetMapping("/login")
 	public String login (Model model) {
 		
-		//model.addAttribute("errorLogin", "El correo o la contraseña no son correctos.");
-
 		return "login";
 	}
 	

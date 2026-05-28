@@ -97,7 +97,6 @@ public class DataSeed {
             
             Reserva reserva1 = Reserva.builder()
             		.fecha(LocalDateTime.of(2026, 6, 02, 19, 30))
-                    .precioTotal(15.50)
                     .usuario(cliente)
                     .build();
             
@@ -105,7 +104,6 @@ public class DataSeed {
             
             Reserva reserva2 = Reserva.builder()
             		.fecha(LocalDateTime.of(2026, 6, 10, 19, 30))
-                    .precioTotal(55.50)
                     .usuario(cliente)
                     .build();
             
@@ -120,7 +118,7 @@ public class DataSeed {
                     //.observaciones()
                     .build();
             
-            reserva1.addActividadReserva(lineaNatacion);
+            reserva1.addLinea(lineaNatacion);
             actividadReservaRepo.save(lineaNatacion);
             
             ActividadReserva lineaYoga = ActividadReserva.builder()
@@ -130,9 +128,11 @@ public class DataSeed {
                     //.observaciones()
                     .build();
             
-            reserva1.addActividadReserva(lineaYoga);
+            reserva1.addLinea(lineaYoga);
             actividadReservaRepo.save(lineaYoga);
                     
+            reserva1.setPrecioTotal(reserva1.calcularPrecioTotal());
+            reservaRepo.save(reserva1);
         }
         
         System.out.println("Datos autogenerados.");

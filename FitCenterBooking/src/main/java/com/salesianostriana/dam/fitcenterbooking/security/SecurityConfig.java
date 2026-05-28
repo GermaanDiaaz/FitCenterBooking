@@ -23,7 +23,7 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http){
         http.authorizeHttpRequests(
                 (authz) -> authz
-                    .requestMatchers("/actividad/**").authenticated() 
+                    .requestMatchers("/actividad/**", "/carrito", "/misReservas").authenticated() 
                     .requestMatchers("/", "/login", "/registro", "/css/**", "/js/**", "/img/**").permitAll()
                     .anyRequest().permitAll() 
                 )

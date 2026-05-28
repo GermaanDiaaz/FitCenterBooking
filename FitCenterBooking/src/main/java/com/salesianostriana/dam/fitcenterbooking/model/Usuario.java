@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.salesianostriana.dam.fitcenterbooking.security.RolesUsuario;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -41,7 +42,7 @@ public class Usuario implements UserDetails{
 	private RolesUsuario rol;
 
 
-	@OneToMany(mappedBy = "usuario")
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	private List<Reserva> reservas;
 	
 	@Override

@@ -53,13 +53,14 @@ public class ControllerReserva {
 			@RequestParam("usuarioId") Long idUsuario) {
 		
 		Reserva resOriginal = service.findById(codigo).get();
-		
 		Usuario user = serviceUsuario.findById(idUsuario).get();
 		
 		resOriginal.setFecha(reservaEditada.getFecha());
-		resOriginal.setPrecioTotal(reservaEditada.getPrecioTotal());
 		resOriginal.setUsuario(user);
 		
+		double precioCalculado = reservaEditada.getPrecioTotal();
+		resOriginal.setPrecioTotal(precioCalculado);
+
 		service.save(resOriginal); 
 		
 		return "redirect:/reservas";

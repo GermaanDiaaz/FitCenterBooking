@@ -20,3 +20,9 @@ tbody img{
     min-width: 65px;
     width: 65px;
 }
+
+#imgCarrito img{
+    max-width: 100px;
+    min-width: 100px;
+    width: 100px;
+}

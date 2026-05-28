@@ -41,12 +41,30 @@ public class Reserva {
 	
 	
 	
-	public void addActividadReserva(ActividadReserva linea) {
+	public void addLinea(ActividadReserva linea) {
 	    if (this.actividades == null) {
 	        this.actividades = new java.util.ArrayList<>();
 	    }
 	    this.actividades.add(linea);
 	    linea.setReserva(this);
+	}
+	
+	
+	public double calcularPrecioTotal() {
+	    if (this.actividades == null || this.actividades.isEmpty()) {
+	        return 0.00;
+	        
+	    }else {
+	    	double suma = 0.0;
+	        
+	        for (ActividadReserva linea : this.actividades) {
+	            suma += linea.getActividad().getPrecio();
+	        }
+	        
+	        return suma;
+	    }
+	    
+	    
 	}
 }
 
