@@ -17,25 +17,30 @@
 
 	<main class="mb-5">
         <div class="container text-center my-5">
-            <div class="d-inline-block bg-dark bg-opacity-75 px-5 py-2 rounded-pill shadow">
+            <div class="d-inline-block bg-dark bg-opacity-75 px-5 py-2 rounded-pill">
                 <h1 class="text-white m-0 fw-bold">Mi Carrito</h1>
             </div>
         </div>
+        <div th:if="${#lists.isEmpty(listaCarrito)}" class="w-50 mx-auto px-4 bg-dark bg-opacity-75 p-4 rounded-3">
+                <h3 class="text-info mb-3 border-bottom border-secondary pb-2">
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                    Actividades seleccionadas
+                </h3>
+                <div class="text-center py-5">                        
+                    <p class="lead text-secondary">No has añadido ninguna actividad al carrito todavía.</p>
+                    <a th:href="@{/}" class="btn btn-outline-info rounded-pill mt-2">Ver Actividades</a>
+                </div>
+            </div>
         
-        <div class="container mx-auto px-4">
+        <div th:if="${not (#lists.isEmpty(listaCarrito))}" class="container mx-auto px-4">
             <div class="row g-4">
                 
                 <div class="col-lg-8">
-                    <div class="card p-4 rounded-4 bg-dark bg-opacity-75 text-white h-100 shadow border-0">
+                    <div class="card p-4 rounded-4 bg-dark bg-opacity-75 text-white h-100 border-0">
                         <h3 class="text-info mb-3 border-bottom border-secondary pb-2">
                             <i class="bi bi-info-circle-fill me-2"></i>
                             Actividades seleccionadas
                         </h3>
-
-                        <div th:if="${#lists.isEmpty(listaCarrito)}" class="text-center py-5">
-                            <p class="lead text-secondary">No has añadido ninguna actividad al carrito todavía.</p>
-                            <a th:href="@{/}" class="btn btn-outline-info rounded-pill mt-2">Ver Actividades</a>
-                        </div>
 
                         <div th:each="a : ${listaCarrito}" class="d-flex align-items-center justify-content-between p-3 mb-3 bg-secondary bg-opacity-25 rounded-3 border border-secondary">
                             <div class="d-flex align-items-center" id="imgCarrito">

@@ -65,7 +65,7 @@ public class ControllerUsuario {
 	@GetMapping("/usuarios/editar/{id}")
 	public String editarActividad(@PathVariable("id") Long id, Model model) {
 		
-		Usuario u = service.findById(id).get();
+		Usuario u = service.buscarPorID(id);
         model.addAttribute("usuario", u);
 		
 		return "formUsuario";

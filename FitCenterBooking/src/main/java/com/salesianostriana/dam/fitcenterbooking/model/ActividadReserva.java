@@ -1,6 +1,12 @@
 package com.salesianostriana.dam.fitcenterbooking.model;
 
+import java.time.LocalDateTime;
+
+import com.salesianostriana.dam.fitcenterbooking.security.EstadosReserva;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -19,7 +25,7 @@ public class ActividadReserva {
 
 	@Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "reserva_id")
@@ -29,6 +35,21 @@ public class ActividadReserva {
     @JoinColumn(name = "actividad_id")
     private Actividad actividad;
 
-    private String estado;
+    @Enumerated(EnumType.STRING)
+    private EstadosReserva estado;
+    
     private String observaciones;
+    
+    
+    public EstadosReserva getEstado() {
+        if (this.reserva == null || this.reserva.getFecha() == null) {
+            return EstadosReserva.RESERVADA;
+        }
+        
+        if (this.reserva.getFecha().isBefore(LocalDateTime.now())) {
+            return EstadosReserva.REALIZADA;
+        } else {
+            return EstadosReserva.RESERVADA;
+        }
+    }
 }

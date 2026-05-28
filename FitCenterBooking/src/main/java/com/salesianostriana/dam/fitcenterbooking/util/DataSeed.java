@@ -114,8 +114,6 @@ public class DataSeed {
             ActividadReserva lineaNatacion = ActividadReserva.builder()
                     .reserva(reserva1)
                     .actividad(natacion)
-                    .estado("RESERVADA")
-                    //.observaciones()
                     .build();
             
             reserva1.addLinea(lineaNatacion);
@@ -124,8 +122,6 @@ public class DataSeed {
             ActividadReserva lineaYoga = ActividadReserva.builder()
                     .reserva(reserva1)
                     .actividad(yoga)
-                    .estado("RESERVADA")
-                    //.observaciones()
                     .build();
             
             reserva1.addLinea(lineaYoga);

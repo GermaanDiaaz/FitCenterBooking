@@ -40,7 +40,7 @@ public class ControllerReserva {
 	@GetMapping("/reservas/editar/{codigo}")
 	public String editarActividad(@PathVariable("codigo") Long codigo, Model model) {
 		
-		Reserva r = service.findById(codigo).get();
+		Reserva r = service.buscarPorID(codigo);
 		
         model.addAttribute("reserva", r);
         model.addAttribute("usuarios", serviceUsuario.findAll());
@@ -52,13 +52,13 @@ public class ControllerReserva {
 	public String procesarEdicion(@PathVariable("codigo") Long codigo, @ModelAttribute("reserva") Reserva reservaEditada,
 			@RequestParam("usuarioId") Long idUsuario) {
 		
-		Reserva resOriginal = service.findById(codigo).get();
-		Usuario user = serviceUsuario.findById(idUsuario).get();
+		Reserva resOriginal = service.buscarPorID(codigo);
+		Usuario user = serviceUsuario.buscarPorID(idUsuario);
 		
 		resOriginal.setFecha(reservaEditada.getFecha());
 		resOriginal.setUsuario(user);
 		
-		double precioCalculado = reservaEditada.getPrecioTotal();
+		double precioCalculado = resOriginal.calcularPrecioTotal(); 
 		resOriginal.setPrecioTotal(precioCalculado);
 
 		service.save(resOriginal); 

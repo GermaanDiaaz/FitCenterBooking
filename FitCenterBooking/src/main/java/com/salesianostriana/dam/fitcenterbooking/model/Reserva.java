@@ -28,7 +28,7 @@ public class Reserva {
 	@GeneratedValue
 	private Long codigo;
 	
-	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	@DateTimeFormat(pattern = "dd-MM-yyyy'T'HH:mm")
 	private LocalDateTime fecha;
 	private double precioTotal;
 	

@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.fitcenterbooking.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.salesianostriana.dam.fitcenterbooking.model.Actividad;
+import com.salesianostriana.dam.fitcenterbooking.model.ActividadReserva;
+import com.salesianostriana.dam.fitcenterbooking.model.Reserva;
+import com.salesianostriana.dam.fitcenterbooking.model.Usuario;
 import com.salesianostriana.dam.fitcenterbooking.service.ServiceActividad;
+import com.salesianostriana.dam.fitcenterbooking.service.ServiceReserva;
+import com.salesianostriana.dam.fitcenterbooking.service.ServiceUsuario;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +26,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ControllerCarrito {
 	
-	private final ServiceActividad service;
+	private final ServiceActividad serviceActividad;
+	private final ServiceReserva serviceReserva;
+	private final ServiceUsuario serviceUsuario;
+
 
 	@SuppressWarnings("unchecked")
 	private List<Actividad> obtenerCarrito(HttpSession sesion) {
@@ -50,26 +59,55 @@ public class ControllerCarrito {
 	@GetMapping("/carrito/add/{id}")
 	public String añadirAlCarrito(@PathVariable("id") Long id, HttpSession sesion) {
 		List<Actividad> carrito = obtenerCarrito(sesion);
-		Actividad a = service.findById(id).orElse(null);
-		
-		if (a != null && !carrito.contains(a)) {
-			carrito.add(a);
-		}
+		Actividad activ = serviceActividad.buscarPorID(id);
+	    
+	    if (!carrito.contains(activ)) {
+	        carrito.add(activ);
+	    }
 		return "redirect:/carrito";
 	}
 	
 	@PostMapping("/carrito/confirmar")
-	public String confirmarReserva(@RequestParam("fechaFormulario") String fecha, HttpSession sesion) {
-		
-		
-		sesion.removeAttribute("carrito");
+	public String confirmarReserva(@RequestParam("fecha") String fecha, HttpSession sesion) {
+	    
+	    List<Actividad> actividadesCarrito = obtenerCarrito(sesion);
+	    
+	    LocalDateTime fechaSeleccionada = LocalDateTime.parse(fecha);
+	    
+	    Usuario usuarioCliente = serviceUsuario.buscarPorID(2L); 
+	    
+	    Reserva nuevaReserva = Reserva.builder()
+	            .fecha(fechaSeleccionada)
+	            .usuario(usuarioCliente)
+	            .build();
+	            
+	    nuevaReserva = serviceReserva.save(nuevaReserva);
+	    
+	    for (Actividad act : actividadesCarrito) {
+	        ActividadReserva linea = ActividadReserva.builder()
+	                .reserva(nuevaReserva)
+	                .actividad(act)
+	                .build();
+	        
+	        nuevaReserva.addLinea(linea);
+	    }
+	    
+	    nuevaReserva.setPrecioTotal(nuevaReserva.calcularPrecioTotal());
+	    
+	    serviceReserva.save(nuevaReserva);
+	    
+	    sesion.removeAttribute("carrito");
+	    
 	    return "redirect:/misReservas";
 	}
 	
 	@GetMapping("/misReservas")
 	public String verMisReservas (Model model) {
-			
-		model.addAttribute("listaCarrito", service.findAll());		
+		List<Reserva> reservasUsuario = serviceReserva.listarReservasUsuario(2L);
+		
+		model.addAttribute("listaReservas", reservasUsuario);
 		return "misReservas";
 	}
+	
+	
 }
