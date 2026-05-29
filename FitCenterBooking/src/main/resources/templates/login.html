@@ -16,7 +16,7 @@
 	<div th:replace="~{fragments/general :: cabecera}"></div>
 
     <main class="mb-5">
-        <div class="container bg-opacity-75 w-25 rounded-pill my-5 bg-dark p-2">
+        <div class="container bg-opacity-75 w-25 rounded-4 my-5 bg-dark p-2">
 			<h1 class="text-center text-white">Inicio de sesión</h1>
 		</div>
         <div class="w-50 mx-auto px-4">
@@ -24,10 +24,11 @@
                 <form method="POST" th:action="@{/login}">
 
                     <div th:if="${param.error}" class="bg-danger d-inline-block rounded-3 py-2 px-3">
-                        <p class="fw-bold text-lisht text-center m-0">El correo o la contraseña no son correctos.</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle-fill me-2" viewBox="0 0 16 16"><path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/></svg>
+                        <span class="fw-bold text-light text-center m-0">El correo o la contraseña no son correctos.</span>
                     </div>
                     <div th:if="${param.logout}" class="bg-success d-inline-block rounded-3 py-2 px-3">
-                        <p class="fw-bold text-lisht text-center m-0">Has cerrado sesión correctamente.</p>
+                        <span class="fw-bold text-light text-center m-0">Has cerrado sesión correctamente.</span>
                     </div>
 
                     <div class="mb-4 mt-3">

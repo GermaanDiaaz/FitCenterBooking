@@ -16,12 +16,12 @@
 	<div th:replace="~{fragments/general :: cabecera}"></div>
 
     <main class="mb-5">
-        <div class="container bg-opacity-75 w-25 rounded-pill my-5 bg-dark p-2">
+        <div class="container bg-opacity-75 w-25 rounded-4 my-5 bg-dark p-2">
 			<h1 class="text-center text-white">Editar Reserva</h1>
 		</div>
         <div class="w-50 mx-auto px-4">
             <div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white">
-                <form method="POST" th:action="@{/reservas/editar/{codigo}(codigo=${reserva.codigo})}" th:object="${reserva}">
+                <form method="POST" th:action="@{''}" th:object="${reserva}">
 
                     <input type="hidden" th:field="*{codigo}">
 
@@ -37,7 +37,7 @@
                             </p>
                         </div>
                     </div>
-                    <div class="mb-4 me-5">
+                    <div sec:authorize="hasRole('ADMIN')" class="mb-4 me-5">
                         <label for="usuario" class="form-label mb-3 fs-5">Cliente Asignado: *</label>
                         <select class="form-select form-select-lg" id="usuario" name="usuarioId" required>
                             <option th:each="u : ${usuarios}" th:value="${u.id}" th:text="${u.nombre + ' (' + u.email + ')'}" 
@@ -45,6 +45,14 @@
                                 El Ger (ger@ger.com)
                             </option>
                         </select>
+                    </div>
+
+                    <div sec:authorize="hasRole('CLIENTE')" class="mb-4 me-5">
+                        <label for="usuario" class="form-label mb-3 fs-5">Cliente Asignado:</label>
+                        <p class="form-select form-select-lg bg-secondary bg-opacity-75 text-white" 
+                            th:text="${reserva.usuario.nombre + ' (' + reserva.usuario.email + ')'}">
+                            El Ger (ger@ger.com)
+                        </p>
                     </div>
 
                     <button type="submit" class="btn btn-info d-block mx-auto mb-3 mt-5 w-75 py-2">

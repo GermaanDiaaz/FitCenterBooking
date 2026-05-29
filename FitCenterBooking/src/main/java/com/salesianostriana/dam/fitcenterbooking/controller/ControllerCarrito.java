@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.salesianostriana.dam.fitcenterbooking.model.Actividad;
 import com.salesianostriana.dam.fitcenterbooking.model.ActividadReserva;
@@ -60,26 +62,33 @@ public class ControllerCarrito {
 	@GetMapping("/carrito/add/{id}")
 	public String añadirAlCarrito(@PathVariable("id") Long id, HttpSession sesion) {
 		List<Actividad> carrito = obtenerCarrito(sesion);
-		Actividad activ = serviceActividad.buscarPorID(id);
+		Actividad a = serviceActividad.buscarPorID(id);
 	    
-	    if (!carrito.contains(activ)) {
-	        carrito.add(activ);
+		boolean yaExiste = false;
+	    
+	    for (Actividad actividad : carrito) {
+	        if (actividad.getId().equals(id)) {
+	            yaExiste = true;
+	            break;
+	        }
+	    }
+	    
+	    if (!yaExiste) {
+	        carrito.add(a);
 	    }
 		return "redirect:/carrito";
 	}
 	
 	@PostMapping("/carrito/confirmar")
-	public String confirmarReserva(@RequestParam("fecha") String fecha, HttpSession sesion) {
+	public String confirmarReserva(@RequestParam("fecha") String fecha, HttpSession sesion, @AuthenticationPrincipal Usuario usuarioLogueado) {
 	    
 	    List<Actividad> actividadesCarrito = obtenerCarrito(sesion);
 	    
 	    LocalDateTime fechaSeleccionada = LocalDateTime.parse(fecha);
-	    
-	    Usuario usuarioCliente = serviceUsuario.buscarPorID(2L); 
-	    
+	    	    
 	    Reserva nuevaReserva = Reserva.builder()
 	            .fecha(fechaSeleccionada)
-	            .usuario(usuarioCliente)
+	            .usuario(usuarioLogueado)
 	            .build();
 	            
 	    nuevaReserva = serviceReserva.save(nuevaReserva);
@@ -103,8 +112,8 @@ public class ControllerCarrito {
 	}
 	
 	@GetMapping("/misReservas")
-	public String verMisReservas (Model model) {
-		List<Reserva> reservasUsuario = serviceReserva.listarReservasUsuario(2L);
+	public String verMisReservas (Model model, @AuthenticationPrincipal Usuario usuarioLogueado) {
+		List<Reserva> reservasUsuario = serviceReserva.listarReservasUsuario(usuarioLogueado.getId());
 		
 		model.addAttribute("listaReservas", reservasUsuario);
 		return "misReservas";
@@ -137,7 +146,17 @@ public class ControllerCarrito {
 
 		serviceReserva.save(resOriginal); 
 		
-		return "redirect:/reservas";
+		return "redirect:/misReservas";
+	}
+	
+	@GetMapping("/carrito/eliminar/{id}")
+	public String eliminarDelCarrito(@PathVariable("id") Long id, HttpSession sesion) {
+	    
+	    List<Actividad> carrito = obtenerCarrito(sesion);
+	    
+	    carrito.removeIf(actividad -> actividad.getId().equals(id));
+	    
+	    return "redirect:/carrito";
 	}
 	
 	

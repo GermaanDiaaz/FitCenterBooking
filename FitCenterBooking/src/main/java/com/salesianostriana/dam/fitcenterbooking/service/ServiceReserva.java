@@ -21,4 +21,9 @@ public class ServiceReserva extends BaseServiceImpl<Reserva, Long, RepositoryRes
 	public List<Reserva> listarReservasUsuario(Long codigo) {
 		return repository.listarPorID(codigo);
 	}
+	
+	public boolean tieneReservaAsignada(Long idActividad) {
+		
+	    return repository.existeEstaActividadEnAlgunaReserva(idActividad);
+	}
 }

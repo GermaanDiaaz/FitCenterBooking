@@ -15,11 +15,27 @@
 	<div th:replace="~{fragments/general :: cabecera}"></div>
 
 	<main>
-		<div class="container bg-opacity-75 w-50 rounded-pill my-3 bg-dark p-2">
+		<div class="container bg-opacity-75 w-50 rounded-4 my-3 bg-dark p-2">
 			<h1 class="text-center text-white">Nuestras Actividades</h1>
 		</div>
+
+		<div th:if="${#lists.isEmpty(listaActividades)}" class="w-50 mx-auto mt-5 px-4 bg-dark bg-opacity-75 p-4 rounded-4">
+            <h3 class="text-info mb-3 border-bottom border-secondary pb-2">
+                <i class="bi bi-info-circle-fill me-2"></i>
+                Actividades registradas
+            </h3>                
+            <div class="text-center py-5">                        
+                <p class="lead text-secondary">Actualmente no contamos con ninguna actividad para resrvar.</p>
+				<div sec:authorize="hasRole('ADMIN')">
+					<a th:href="@{/actividades/nueva}" class="btn btn-outline-success rounded-pill mt-2 fw-bold">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/></svg>
+						Añadir Actividad
+					</a>
+				</div>      
+            </div>
+        </div>
 		
-		<div class="row justify-content-center g-4 m-3">
+		<div th:if="${not (#lists.isEmpty(listaActividades))}" class="row justify-content-center g-4 m-3">
 			
 			<div class="col-md-4 px-4" th:each="actividad : ${listaActividades}">
 				<div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white text-center">
@@ -42,8 +58,6 @@
 					</a>
 				</div>
 			</div>
-
-			
 		</div>
 	</main>
 

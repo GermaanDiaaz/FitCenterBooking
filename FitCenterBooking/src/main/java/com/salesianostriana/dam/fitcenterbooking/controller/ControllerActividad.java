@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.salesianostriana.dam.fitcenterbooking.model.Actividad;
 import com.salesianostriana.dam.fitcenterbooking.service.ServiceActividad;
+import com.salesianostriana.dam.fitcenterbooking.service.ServiceReserva;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 public class ControllerActividad {
 	
 	private final ServiceActividad service;
+	private final ServiceReserva serviceReserva;
+
 
 	@GetMapping({"/"})
 	public String index (Model model) {
@@ -58,9 +62,15 @@ public class ControllerActividad {
 	
 	
 	@GetMapping("/actividades/eliminar/{id}")
-	public String eliminarActividad(@PathVariable("id") Long id) {
+	public String eliminarActividad(@PathVariable("id") Long id, RedirectAttributes redirect) {
 		
-		service.deleteById(id); 
+		if (serviceReserva.tieneReservaAsignada(id)) { 
+			
+			redirect.addFlashAttribute("error", "No puedes eliminar una actividad asociada a reservas existentes.");
+	        return "redirect:/actividades";
+	        }
+	    
+	    service.deleteById(id);	
 		
 		return "redirect:/actividades";
 	}
