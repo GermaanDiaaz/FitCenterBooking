@@ -40,8 +40,11 @@ public class ControllerActividad {
 	public String mostrarActividad (@PathVariable("id") Long id,Model model) {
 		
 		Actividad a = service.buscarPorID(id);
-        
-		model.addAttribute("actividad", a);
+		
+		int ocupadas = serviceReserva.obtenerPlazasOcupadas(id);
+	    
+	    model.addAttribute("actividad", a);
+	    model.addAttribute("ocupadas", ocupadas);
 		
 		return "actividad";
 	}

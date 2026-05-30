@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.salesianostriana.dam.fitcenterbooking.exception.CapacidadExcedidaException;
 import com.salesianostriana.dam.fitcenterbooking.exception.ReservaAjenaException;
+import com.salesianostriana.dam.fitcenterbooking.exception.ReservaInvalidaException;
 import com.salesianostriana.dam.fitcenterbooking.model.Actividad;
 import com.salesianostriana.dam.fitcenterbooking.model.ActividadReserva;
 import com.salesianostriana.dam.fitcenterbooking.model.Reserva;
@@ -80,35 +83,53 @@ public class ControllerCarrito {
 	}
 	
 	@PostMapping("/carrito/confirmar")
-	public String confirmarReserva(@RequestParam("fecha") String fecha, HttpSession sesion, @AuthenticationPrincipal Usuario usuarioLogueado) {
+	public String confirmarReserva(@RequestParam("fecha") String fecha, HttpSession sesion, 
+			@AuthenticationPrincipal Usuario usuarioLogueado, RedirectAttributes redirect) {
 	    
 	    List<Actividad> actividadesCarrito = obtenerCarrito(sesion);
 	    
 	    LocalDateTime fechaSeleccionada = LocalDateTime.parse(fecha);
-	    	    
-	    Reserva nuevaReserva = Reserva.builder()
-	            .fecha(fechaSeleccionada)
-	            .usuario(usuarioLogueado)
-	            .build();
-	            
-	    nuevaReserva = serviceReserva.save(nuevaReserva);
 	    
-	    for (Actividad act : actividadesCarrito) {
-	        ActividadReserva linea = ActividadReserva.builder()
-	                .reserva(nuevaReserva)
-	                .actividad(act)
-	                .build();
-	        
-	        nuevaReserva.addLinea(linea);
+	    try {
+	    	if (fechaSeleccionada.isBefore(LocalDateTime.now())) {
+		        throw new ReservaInvalidaException();
+		    }
+		    	    
+		    Reserva nuevaReserva = Reserva.builder()
+		            .fecha(fechaSeleccionada)
+		            .usuario(usuarioLogueado)
+		            .build();
+		    
+		    for (Actividad act : actividadesCarrito) {
+		        
+		        int plazasOcupadas = serviceReserva.obtenerPlazasOcupadas(act.getId());
+		        
+		        if (plazasOcupadas >= act.getCapacidad()) {
+		            throw new CapacidadExcedidaException();
+		        }
+		        
+		        ActividadReserva linea = ActividadReserva.builder()
+		        		.actividad(act)
+		        		.reserva(nuevaReserva)
+		        		.build();
+		        
+		        nuevaReserva.addLinea(linea);
+		    }
+		            
+		    nuevaReserva.setPrecioTotal(nuevaReserva.calcularPrecioTotal());
+		    serviceReserva.save(nuevaReserva);
+		    
+		    sesion.removeAttribute("carrito");
+		    
+		    return "redirect:/misReservas";
+		    
+	    }catch (ReservaInvalidaException | CapacidadExcedidaException e) {
+	    	
+	        redirect.addFlashAttribute("errorCarrito", e.getMessage());
+	        return "redirect:/carrito";
 	    }
 	    
-	    nuevaReserva.setPrecioTotal(nuevaReserva.calcularPrecioTotal());
 	    
-	    serviceReserva.save(nuevaReserva);
-	    
-	    sesion.removeAttribute("carrito");
-	    
-	    return "redirect:/misReservas";
 	}
 	
 	@GetMapping("/misReservas")

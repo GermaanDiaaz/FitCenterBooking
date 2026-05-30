@@ -46,14 +46,27 @@
                         <h4 class="text-info mb-4 border-bottom border-secondary pb-2">Información Clave</h4>
                         
                         <div class="mb-4">
-                            <div class="d-flex align-items-center mb-3">
+                            <div  th:if="${ocupadas < actividad.capacidad}" class="d-flex align-items-center mb-3">
                                 <div class="text-info rounded pb-2 me-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8"/></svg>
                                 </div>
                                 <div>
                                     <h5 class="text-white-50 mb-2">Aforo:</h5>
                                     <p class="fw-bold fs-5">
-                                        5
+                                        <span th:text="${ocupadas}">0</span>
+                                        <span th:text="${'/' + actividad.capacidad}">25</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div  th:if="${ocupadas >= actividad.capacidad}" class="d-flex align-items-center mb-3">
+                                <div class="text-danger rounded pb-2 me-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8"/></svg>
+                                </div>
+                                <div>
+                                    <h5 class="text-danger mb-2">Aforo:</h5>
+                                    <p class="text-danger fw-bold fs-5">
+                                        <span th:text="${ocupadas}">0</span>
                                         <span th:text="${'/' + actividad.capacidad}">25</span>
                                     </p>
                                 </div>
@@ -81,7 +94,15 @@
                         </div>
                         
                         <div class="d-grid mt-4">
-                            <a th:href="@{/carrito/add/{id}(id=${actividad.id})}" class="btn btn-info btn-lg rounded-pill fw-bold py-2">Añadir al carrito</a>
+                            <a th:if="${ocupadas < actividad.capacidad}" th:href="@{/carrito/add/{id}(id=${actividad.id})}" 
+                                class="btn btn-info btn-lg rounded-pill fw-bold py-2">
+                                Añadir al carrito
+                            </a>
+
+                            <button th:if="${ocupadas >= actividad.capacidad}" 
+                                class="btn btn-secondary btn-lg rounded-pill fw-bold py-2" disabled>
+                                Aforo Completo
+                            </button>
                         </div>
                     </div>
                 </div>

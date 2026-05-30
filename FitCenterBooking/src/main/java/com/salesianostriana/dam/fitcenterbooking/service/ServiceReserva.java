@@ -14,8 +14,7 @@ public class ServiceReserva extends BaseServiceImpl<Reserva, Long, RepositoryRes
 
 	public Reserva buscarPorID(Long codigo) {
 		return repository.findById(codigo)
-        .orElseThrow(() -> new ReservaNotFoundException(codigo));
-		
+        .orElseThrow(() -> new ReservaNotFoundException(codigo));		
 	}
 	
 	
@@ -32,5 +31,10 @@ public class ServiceReserva extends BaseServiceImpl<Reserva, Long, RepositoryRes
 	
 	public boolean tieneReservasAsignadas(Long idUsuario) {
 	    return repository.existsByUsuarioId(idUsuario);
+	}
+	
+	
+	public int obtenerPlazasOcupadas(Long actividadId) {
+	    return repository.contarPlazasReservadas(actividadId);
 	}
 }

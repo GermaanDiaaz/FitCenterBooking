@@ -18,4 +18,7 @@ public interface RepositoryReserva extends JpaRepository<Reserva, Long>{
 	boolean existeEstaActividadEnAlgunaReserva(Long id);
 	
 	boolean existsByUsuarioId(Long usuarioId);
+	
+	@Query("SELECT COUNT(ar) FROM ActividadReserva ar WHERE ar.actividad.id = :actividadId")
+    int contarPlazasReservadas(@Param("actividadId") Long actividadId);
 }
