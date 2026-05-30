@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.salesianostriana.dam.fitcenterbooking.exception.ReservaAjenaException;
 import com.salesianostriana.dam.fitcenterbooking.model.Actividad;
 import com.salesianostriana.dam.fitcenterbooking.model.ActividadReserva;
 import com.salesianostriana.dam.fitcenterbooking.model.Reserva;
@@ -132,21 +132,26 @@ public class ControllerCarrito {
 	}
 	
 	@PostMapping("/misReservas/editar/{codigo}")
-	public String procesarEdicion(@PathVariable("codigo") Long codigo, @ModelAttribute("reserva") Reserva reservaEditada,
-			@RequestParam("usuarioId") Long idUsuario) {
+	public String procesarEdicion(@PathVariable("codigo") Long codigo, 
+			@ModelAttribute("reserva") Reserva reservaEditada,
+			@RequestParam("usuarioId") Long idUsuario, 
+			@AuthenticationPrincipal Usuario usuarioLogueado) {
 		
 		Reserva resOriginal = serviceReserva.buscarPorID(codigo);
-		Usuario user = serviceUsuario.buscarPorID(idUsuario);
-		
-		resOriginal.setFecha(reservaEditada.getFecha());
-		resOriginal.setUsuario(user);
-		
-		double precioCalculado = resOriginal.calcularPrecioTotal(); 
-		resOriginal.setPrecioTotal(precioCalculado);
-
-		serviceReserva.save(resOriginal); 
-		
-		return "redirect:/misReservas";
+	    
+	    if (!usuarioLogueado.getRol().equals("ADMIN") && !resOriginal.getUsuario().getId().equals(usuarioLogueado.getId())) {
+	    	
+	        throw new ReservaAjenaException();
+	    }
+	    
+	    Usuario user = serviceUsuario.buscarPorID(idUsuario);
+	    
+	    resOriginal.setFecha(reservaEditada.getFecha());
+	    resOriginal.setUsuario(user);
+	    
+	    serviceReserva.save(resOriginal); 
+	    
+	    return "redirect:/misReservas";
 	}
 	
 	@GetMapping("/carrito/eliminar/{id}")
