@@ -102,6 +102,10 @@ public class ControllerCarrito {
 		
 	    List<Actividad> actividadesCarrito = obtenerCarrito(sesion);
 	    
+	    if (actividadesCarrito.isEmpty()) {
+	        return "redirect:/carrito";
+	    }
+	    
 	    LocalDateTime fechaSeleccionada = fecha;
 	    
 	    try {	    
@@ -152,10 +156,15 @@ public class ControllerCarrito {
 	
 	
 	@GetMapping("/misReservas/editar/{codigo}")
-	public String editarActividad(@PathVariable("codigo") Long codigo, Model model) {
+	public String editarActividad(@PathVariable("codigo") Long codigo, Model model, 
+			@AuthenticationPrincipal Usuario usuarioLogueado) {
 		
 		Reserva r = serviceReserva.buscarPorID(codigo);
 		
+		if (!r.getUsuario().getId().equals(usuarioLogueado.getId())) {
+	        return "redirect:/misReservas";
+	    }
+				
         model.addAttribute("reserva", r);
         model.addAttribute("usuarios", serviceUsuario.findAll());
 		
