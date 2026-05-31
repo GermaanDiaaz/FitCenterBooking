@@ -155,7 +155,7 @@ public class ControllerCarrito {
 	@PostMapping("/misReservas/editar/{codigo}")
 	public String procesarEdicion(@PathVariable("codigo") Long codigo, 
 			@ModelAttribute("reserva") Reserva reservaEditada,
-			@RequestParam("usuarioId") Long idUsuario, 
+			@RequestParam(value = "usuarioId", required = false) Long idUsuario, 
 			@AuthenticationPrincipal Usuario usuarioLogueado) {
 		
 		Reserva resOriginal = serviceReserva.buscarPorID(codigo);
@@ -164,11 +164,13 @@ public class ControllerCarrito {
 	    	
 	        throw new ReservaAjenaException();
 	    }
-	    
-	    Usuario user = serviceUsuario.buscarPorID(idUsuario);
-	    
+	    	    
 	    resOriginal.setFecha(reservaEditada.getFecha());
-	    resOriginal.setUsuario(user);
+	    
+	    if (idUsuario != null) {
+			Usuario user = serviceUsuario.buscarPorID(idUsuario);
+			resOriginal.setUsuario(user);
+		}
 	    
 	    serviceReserva.save(resOriginal); 
 	    
