@@ -28,13 +28,20 @@
                     <div class="mb-4 mt-3">
                         <label for="nombre" class="form-label mb-3 fs-5">Nombre: *</label>
                         <input type="text" class="form-control form-control-lg" id="nombre" placeholder="Introduzca su nombre. . ." th:field="*{nombre}" required 
-                            minlength="2">
+                            minlength="1">
                         <div class="invalid-feedback">Por favor, introduce tu nombre.</div>
                     </div>
                     <div class="mb-4">
                         <label for="email" class="form-label mb-3 fs-5">Correo @: *</label>
-                        <input type="email" class="form-control form-control-lg" id="email" placeholder="Introduzca su email. . ." th:field="*{email}" required>
-                        <div class="invalid-feedback">Introduce un correo electrónico válido (ej: usuario@gmail.com).</div>
+                        <input type="email" class="form-control form-control-lg" id="email" placeholder="Introduzca su email. . ." th:field="*{email}" 
+                            th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" required>
+                        <div class="invalid-feedback" th:if="${!#fields.hasErrors('email')}">
+                            Introduce un correo electrónico válido (ej: usuario@gmail.com).
+                        </div>
+                        
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                            Error de email repetido.
+                        </div>
                     </div>
                     <div class="mb-4">
                         <label for="telefono" class="form-label mb-3 fs-5">Teléfono: *</label>

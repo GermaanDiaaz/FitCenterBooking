@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.fitcenterbooking.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -20,5 +21,13 @@ public class ServiceUsuario extends BaseServiceImpl<Usuario, Long, RepositoryUsu
         return repository.findById(id)
                 .orElseThrow(() -> new UsuarioNotFoundException(id));
     }
+	
+	public boolean existsByEmail(String email) {
+        return repository.existsByEmail(email);
+    }
+	
+	public List<Usuario> listarSoloActivos() {
+	    return repository.findByActivoTrue();
+	}
 	
 }

@@ -26,20 +26,16 @@
             <div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white">
                 <form method="POST" th:action="@{''}" th:object="${reserva}" class="needs-validation" novalidate>
 
-                    <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger py-2 px-3 mb-4">
-                        <p class="fw-bold m-0">Por favor, corrige los errores:</p>
-                        <ul class="m-0 mt-1 sm">
-                            <li th:each="err : ${#fields.allErrors()}" th:text="${err}">Error</li>
-                        </ul>
-                    </div>
-                    
                     <input type="hidden" th:field="*{codigo}">
 
                     <div class="d-flex gap-4">
                         <div class="mb-4 mt-3 flex-fill">
                             <label for="fecha" class="form-label mb-3 fs-5">Fecha: *</label>
-                            <input type="datetime-local" class="form-control form-control-lg" id="fecha" th:field="*{fecha}" required>
-                            <div class="invalid-feedback">La fecha y hora seleccionadas no pueden ser pasadas.</div>
+                            <input type="datetime-local" class="form-control form-control-lg" id="fecha" th:field="*{fecha}" 
+                                th:classappend="${#fields.hasErrors('fecha')} ? 'is-invalid'" required>
+                            <div class="invalid-feedback" th:if="${!#fields.hasErrors('fecha')}">La fecha y hora seleccionadas no pueden ser pasadas o estar vacías.</div>
+    
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('fecha')}" th:errors="*{fecha}"></div>
                         </div>
                         <div class="mb-4 mt-3 flex-fill">
                             <label for="precioTotal" class="form-label mb-3 fs-5">Precio Total:</label>
@@ -62,7 +58,7 @@
                     <div sec:authorize="hasRole('CLIENTE')" class="mb-4 me-5">
                         <label for="usuario" class="form-label mb-3 fs-5">Cliente Asignado:</label>
                         <p class="form-select form-select-lg bg-secondary bg-opacity-75 text-white" 
-                            th:text="${reserva.usuario.nombre + ' (' + reserva.usuario.email + ')'}">
+                            th:text="${reserva.usuario?.nombre + ' (' + reserva.usuario?.email + ')'}">
                             El Ger (ger@ger.com)
                         </p>
                     </div>

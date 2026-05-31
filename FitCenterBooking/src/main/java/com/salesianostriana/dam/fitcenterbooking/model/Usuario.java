@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.salesianostriana.dam.fitcenterbooking.security.RolesUsuario;
 
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -44,6 +44,7 @@ public class Usuario implements UserDetails{
 	
 	@NotBlank(message = "El correo electrónico es obligatorio")
 	@Email(message = "Debe introducir un formato de correo válido")
+	@Column(unique = true)
 	private String email;
 	
 	@NotBlank(message = "El teléfono es obligatorio")
@@ -57,10 +58,13 @@ public class Usuario implements UserDetails{
 	
 	@Enumerated(EnumType.STRING)
 	private RolesUsuario rol;
+	
+	
+	@Builder.Default
+	private boolean activo = true;
 
-
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
-	private List<Reserva> reservas;
+	@OneToMany(mappedBy = "usuario")
+    private List<Reserva> reservas;
 	
 	@Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -72,4 +76,19 @@ public class Usuario implements UserDetails{
 	public String getUsername() {
 		return this.email;
 	}
+	
+	@Override
+    public boolean isEnabled() {
+        return this.activo; 
+    }
+	
+	@Override public boolean isAccountNonExpired() {
+		return true; 
+		}
+    @Override public boolean isAccountNonLocked() {
+    	return true; 
+    	}
+    @Override public boolean isCredentialsNonExpired() {
+    	return true; 
+    	}
 }

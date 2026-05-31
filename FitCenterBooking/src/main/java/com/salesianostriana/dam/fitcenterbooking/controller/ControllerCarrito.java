@@ -22,6 +22,7 @@ import com.salesianostriana.dam.fitcenterbooking.model.Actividad;
 import com.salesianostriana.dam.fitcenterbooking.model.ActividadReserva;
 import com.salesianostriana.dam.fitcenterbooking.model.Reserva;
 import com.salesianostriana.dam.fitcenterbooking.model.Usuario;
+import com.salesianostriana.dam.fitcenterbooking.security.RolesUsuario;
 import com.salesianostriana.dam.fitcenterbooking.service.ServiceActividad;
 import com.salesianostriana.dam.fitcenterbooking.service.ServiceReserva;
 import com.salesianostriana.dam.fitcenterbooking.service.ServiceUsuario;
@@ -163,29 +164,42 @@ public class ControllerCarrito {
 	
 	@PostMapping("/misReservas/editar/{codigo}")
 	public String procesarEdicion(@PathVariable("codigo") Long codigo, 
-			@Valid @ModelAttribute("reserva") Reserva reservaEditada,
-			BindingResult bindingResult,
-			@RequestParam(value = "usuarioId", required = false) Long idUsuario, 
-			@AuthenticationPrincipal Usuario usuarioLogueado, Model model) {
-		
-		if (bindingResult.hasErrors()) {
-			model.addAttribute("usuarios", serviceUsuario.findAll());
-			return "formReserva";
-		}
-		
-		Reserva resOriginal = serviceReserva.buscarPorID(codigo);
+	        @Valid @ModelAttribute("reserva") Reserva reservaEditada,
+	        BindingResult bindingResult,
+	        @RequestParam(value = "usuarioId", required = false) Long idUsuario, 
+	        @AuthenticationPrincipal Usuario usuarioLogueado, Model model) {
 	    
-	    if (!usuarioLogueado.getRol().equals("ADMIN") && !resOriginal.getUsuario().getId().equals(usuarioLogueado.getId())) {
-	    	
+		if (reservaEditada.getFecha() != null && reservaEditada.getFecha().isBefore(LocalDateTime.now()) && !bindingResult.hasFieldErrors("fecha")) {
+	        bindingResult.rejectValue("fecha", "error.reserva", "La fecha de la reserva no puede ser pasada.");
+	    }
+
+	    if (bindingResult.hasErrors()) {
+	        Reserva resOriginal = serviceReserva.buscarPorID(codigo);
+	        
+	        reservaEditada.setPrecioTotal(resOriginal.getPrecioTotal());
+	        
+	        if (idUsuario != null) {
+	            reservaEditada.setUsuario(serviceUsuario.buscarPorID(idUsuario));
+	        } else {
+	            reservaEditada.setUsuario(resOriginal.getUsuario());
+	        }
+
+	        model.addAttribute("usuarios", serviceUsuario.findAll());
+	        return "formReserva";
+	    }
+	    
+	    Reserva resOriginal = serviceReserva.buscarPorID(codigo);
+	    
+	    if (usuarioLogueado.getRol() != RolesUsuario.ADMIN && !resOriginal.getUsuario().getId().equals(usuarioLogueado.getId())) {
 	        throw new ReservaAjenaException();
 	    }
-	    	    
+	            
 	    resOriginal.setFecha(reservaEditada.getFecha());
 	    
 	    if (idUsuario != null) {
-			Usuario user = serviceUsuario.buscarPorID(idUsuario);
-			resOriginal.setUsuario(user);
-		}
+	        Usuario user = serviceUsuario.buscarPorID(idUsuario);
+	        resOriginal.setUsuario(user);
+	    }
 	    
 	    serviceReserva.save(resOriginal); 
 	    

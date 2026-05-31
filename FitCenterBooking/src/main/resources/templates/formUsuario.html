@@ -38,8 +38,11 @@
                     </div>
                     <div class="mb-4">
                         <label for="descripcion" class="form-label mb-3 fs-5">Correo @: *</label>
-                        <input type="email" class="form-control form-control-lg" id="email" placeholder="Introduzca el correo electrónico. . ." th:field="*{email}" required>
-                        <div class="invalid-feedback">Introduzca un correo electrónico válido.</div>
+                        <input type="email" class="form-control form-control-lg" id="email" placeholder="Introduzca el correo electrónico. . ." th:field="*{email}" 
+                           th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" required>
+                        <div class="invalid-feedback" th:if="${!#fields.hasErrors('email')}">Introduzca un correo electrónico válido.</div>
+    
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                     </div>
                     <div class="mb-4">
                         <label for="precio" class="form-label mb-3 fs-5">Teléfono: *</label>

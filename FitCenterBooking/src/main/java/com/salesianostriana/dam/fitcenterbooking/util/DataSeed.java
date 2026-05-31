@@ -75,7 +75,7 @@ public class DataSeed {
             Actividad crossfit = Actividad.builder()
                     .nombre("Crossfit")
                     .descripcion("Lleva tu rendimiento al siguiente nivel con nuestro entrenamiento de alta intensidad. Esta disciplina combina ejercicios funcionales, levantamiento olímpico, gimnasia y trabajo cardiovascular en sesiones constantemente variadas. Está diseñado para adaptase a cualquier nivel de condición física, desafiando tus límites diarios, quemando calorías y desarrollando una fuerza y resistencia brutales en comunidad.")
-                    .capacidad(20)
+                    .capacidad(2)
                     .precio(12.50)
                     .imagenUrl("http://localhost:9000/img/Crossfit.png")
                     .build();

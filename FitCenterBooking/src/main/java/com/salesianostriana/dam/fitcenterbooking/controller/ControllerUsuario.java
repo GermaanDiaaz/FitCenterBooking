@@ -2,6 +2,7 @@ package com.salesianostriana.dam.fitcenterbooking.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -35,7 +36,7 @@ public class ControllerUsuario {
 	@GetMapping("/usuarios")
 	public String listarUsuarios (Model model) {
 		
-		model.addAttribute("listaUsuarios", service.findAll());		
+		model.addAttribute("listaUsuarios", service.listarSoloActivos());
 		return "usuarios";
 	}
 	
@@ -58,6 +59,10 @@ public class ControllerUsuario {
 	public String procesarRegistro(@Valid @ModelAttribute("usuario") Usuario newUsuario, 
 			BindingResult bindingResult) {
 		
+		if (service.existsByEmail(newUsuario.getEmail())) {
+			bindingResult.rejectValue("email", "error.newUsuario", "Este correo electrónico ya está registrado.");
+		}
+		
 		if (bindingResult.hasErrors()) {
 	        return "registro";
 	    }
@@ -74,10 +79,10 @@ public class ControllerUsuario {
 		
 		Usuario usuarioABorrar = service.buscarPorID(id);
 		
-		if (usuarioABorrar.getEmail().equals("admin@admin.com")) {
-	        redirect.addFlashAttribute("error", "No se puede eliminar al administrador del sistema por defecto");
-	        return "redirect:/usuarios";
-	    }
+		if (usuarioABorrar.getRol() == RolesUsuario.ADMIN) {
+		    redirect.addFlashAttribute("error", "No se puede eliminar al administrador del sistema");
+		    return "redirect:/usuarios";
+		}
 		
 		List<Reserva> susReservas = serviceReserva.listarReservasUsuario(id);
 	    
@@ -93,8 +98,9 @@ public class ControllerUsuario {
 	        return "redirect:/usuarios";
 	    }
 	    
-	    service.deleteById(id);
-		
+	    usuarioABorrar.setActivo(false);
+	    service.edit(usuarioABorrar);
+	    		
 		return "redirect:/usuarios";
 	}
 	
@@ -110,6 +116,12 @@ public class ControllerUsuario {
 	@PostMapping("/usuarios/editar")
 	public String procesarUsuario(@Valid @ModelAttribute("usuario") Usuario newUser, 
 			BindingResult bindingResult) {
+		
+		Optional<Usuario> mismoEmail = service.findByEmail(newUser.getEmail());
+	    
+	    if (mismoEmail.isPresent() && !mismoEmail.get().getId().equals(newUser.getId())) {
+	        bindingResult.rejectValue("email", "error.newUser", "Este correo electrónico ya está asignado a otro usuario.");
+	    }
 		
 		if (bindingResult.hasErrors()) {
 	        return "formUsuario";

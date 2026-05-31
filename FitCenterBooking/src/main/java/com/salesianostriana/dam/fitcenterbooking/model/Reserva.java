@@ -36,6 +36,8 @@ public class Reserva {
     @FutureOrPresent(message = "La fecha de la reserva no puede ser pasada.")
 	@DateTimeFormat(pattern = "dd-MM-yyyy'T'HH:mm")
 	private LocalDateTime fecha;
+	
+	
 	private double precioTotal;
 	
 	@ToString.Exclude
