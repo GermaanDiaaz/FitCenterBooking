@@ -19,11 +19,11 @@
 	<div th:replace="~{fragments/general :: cabecera}"></div>
 
     <main class="mb-5">
-        <div class="container bg-opacity-75 w-25 rounded-4 my-5 bg-dark p-2">
+        <div class="container bg-opacity-75 w-25 rounded-4 my-5 bg-dark p-2 sombra">
 			<h1 class="text-center text-white">Editar Reserva</h1>
 		</div>
         <div class="w-50 mx-auto px-4">
-            <div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white">
+            <div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white sombra">
                 <form method="POST" th:action="@{''}" th:object="${reserva}" class="needs-validation" novalidate>
 
                     <input type="hidden" th:field="*{codigo}">
@@ -63,7 +63,8 @@
                         </p>
                     </div>
 
-                    <button type="submit" class="btn btn-info d-block mx-auto mb-3 mt-5 w-75 py-2">
+                    <button type="submit" class="btn btn-info d-block mx-auto mb-3 mt-5 w-75 py-2"
+                        onclick="return confirm('¿Estás seguro de que deseas editar esta reserva?');">
                         Editar Reserva
                     </button>
                 </form>

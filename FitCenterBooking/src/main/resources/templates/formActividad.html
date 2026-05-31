@@ -18,11 +18,11 @@
 	<div th:replace="~{fragments/general :: cabecera}"></div>
 
     <main class="mb-5">
-        <div class="container bg-opacity-75 w-25 rounded-4 my-5 bg-dark p-2">
+        <div class="container bg-opacity-75 w-25 rounded-4 my-5 bg-dark p-2 sombra">
 			<h1 class="text-center text-white" th:text="${actividad.id != null} ? 'Editar Actividad' : 'Añadir Actividad'">Añadir Actividad</h1>
 		</div>
         <div class="w-50 mx-auto px-4">
-            <div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white">
+            <div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white sombra">
                 <form method="POST" th:action="@{/actividades/nueva}" th:object="${actividad}" class="needs-validation" novalidate>
 
                     <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger py-2 px-3 mb-4">
@@ -66,7 +66,9 @@
                         <div class="invalid-feedback">La URL introducida debe ser válida.</div>
                     </div>
 
-                    <button type="submit" class="btn btn-info d-block mx-auto my-3 w-75" th:text="${actividad.id != null} ? 'Guardar Cambios' : 'Añadir Actividad'">
+                    <button type="submit" class="btn btn-info d-block mx-auto my-3 w-75" 
+                        onclick="return confirm('¿Estás seguro de que deseas hacer esta actividad?');"    
+                        th:text="${actividad.id != null} ? 'Guardar Cambios' : 'Añadir Actividad'">
                         Añadir Actividad
                     </button>
                 </form>

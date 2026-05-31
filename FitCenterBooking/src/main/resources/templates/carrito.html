@@ -19,11 +19,11 @@
 
 	<main class="mb-5">
         <div class="container text-center my-5">
-            <div class="d-inline-block bg-dark bg-opacity-75 px-5 py-2 rounded-4">
+            <div class="d-inline-block bg-dark bg-opacity-75 px-5 py-2 rounded-4 sombra">
                 <h1 class="text-white m-0 fw-bold">Mi Carrito</h1>
             </div>
         </div>
-        <div th:if="${#lists.isEmpty(listaCarrito)}" class="w-50 mx-auto px-4 bg-dark bg-opacity-75 p-4 rounded-4">
+        <div th:if="${#lists.isEmpty(listaCarrito)}" class="w-50 mx-auto px-4 bg-dark bg-opacity-75 p-4 rounded-4 sombra">
             <h3 class="text-info mb-3 border-bottom border-secondary pb-2">
                 <i class="bi bi-info-circle-fill me-2"></i>
                 Actividades seleccionadas
@@ -38,7 +38,7 @@
             <div class="row g-4">
                 
                 <div class="col-lg-8">
-                    <div class="card p-4 rounded-4 bg-dark bg-opacity-75 text-white h-100 border-0">
+                    <div class="card p-4 rounded-4 bg-dark bg-opacity-75 text-white h-100 border-0 sombra">
                         <h3 class="text-info mb-3 border-bottom border-secondary pb-2">
                             <i class="bi bi-info-circle-fill me-2"></i>
                             Actividades seleccionadas
@@ -66,7 +66,7 @@
                 </div>
                 
                 <div th:if="${not (#lists.isEmpty(listaCarrito))}" class="col-lg-4">
-                    <div class="card p-4 rounded-4 bg-dark bg-opacity-75 text-white shadow border-0">
+                    <div class="card p-4 rounded-4 bg-dark bg-opacity-75 text-white border-0 sombra">
                         <h4 class="text-info mb-4 border-bottom border-secondary pb-2">Resumen de Reserva</h4>
                         
                         <form th:action="@{/carrito/confirmar}" method="POST" th:if="${not #lists.isEmpty(listaCarrito)}" class="needs-validation" novalidate>
@@ -90,7 +90,8 @@
                             </div>
                         
                             <div class="d-grid mt-4">
-                                <button type="submit" class="btn btn-info btn-lg rounded-pill fw-bold py-2">
+                                <button type="submit" class="btn btn-info btn-lg rounded-pill fw-bold py-2"
+                                    onclick="return confirm('¿Estás seguro de que deseas confirmar la reserva?');">
                                     Confirmar y Tramitar Reserva
                                 </button>
 

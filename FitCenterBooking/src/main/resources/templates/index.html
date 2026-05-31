@@ -15,11 +15,11 @@
 	<div th:replace="~{fragments/general :: cabecera}"></div>
 
 	<main>
-		<div class="container bg-opacity-75 w-50 rounded-4 my-3 bg-dark p-2">
+		<div class="container bg-opacity-75 w-50 rounded-4 my-3 bg-dark p-2 sombra">
 			<h1 class="text-center text-white">Nuestras Actividades</h1>
 		</div>
 
-		<div th:if="${#lists.isEmpty(listaActividades)}" class="w-50 mx-auto mt-5 px-4 bg-dark bg-opacity-75 p-4 rounded-4">
+		<div th:if="${#lists.isEmpty(listaActividades)}" class="w-50 mx-auto mt-5 px-4 bg-dark bg-opacity-75 p-4 rounded-4 sombra">
             <h3 class="text-info mb-3 border-bottom border-secondary pb-2">
                 <i class="bi bi-info-circle-fill me-2"></i>
                 Actividades registradas
@@ -38,7 +38,7 @@
 		<div th:if="${not (#lists.isEmpty(listaActividades))}" class="row justify-content-center g-4 m-3">
 			
 			<div class="col-md-4 px-4" th:each="actividad : ${listaActividades}">
-				<div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white text-center">
+				<div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white text-center card-hover">
 
 					<h2 class="mb-3 text-info" th:text="${actividad.nombre}">Yoga</h2>
 					<img th:src="${not (#strings.isEmpty(actividad.imagenUrl))} ? ${actividad.imagenUrl} : @{/img/Defecto.png}" 

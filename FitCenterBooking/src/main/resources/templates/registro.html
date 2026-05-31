@@ -19,11 +19,11 @@
 	<div th:replace="~{fragments/general :: cabecera}"></div>
 
     <main class="mb-5">
-        <div class="container bg-opacity-75 w-25 rounded-4 my-5 bg-dark p-2">
+        <div class="container bg-opacity-75 w-25 rounded-4 my-5 bg-dark p-2 sombra">
 			<h1 class="text-center text-white">Registro de usuario</h1>
 		</div>
         <div class="w-50 mx-auto px-4">
-            <div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white">
+            <div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white sombra">
                 <form method="POST" th:action="@{/registro}" th:object="${usuario}" class="needs-validation" novalidate>
                     <div class="mb-4 mt-3">
                         <label for="nombre" class="form-label mb-3 fs-5">Nombre: *</label>
