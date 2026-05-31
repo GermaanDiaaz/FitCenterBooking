@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es" xmlns:th="https://www.thymeleaf.org">
  	
@@ -11,6 +12,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
 	<link rel="stylesheet"  href="../static/css/general.css" th:href="@{/css/general.css}">
+
+    <script th:src="@{/js/validaciones.js}" defer></script>
 </head>
 <body class="bg-secondary">
 	<div th:replace="~{fragments/general :: cabecera}"></div>
@@ -21,22 +24,29 @@
 		</div>
         <div class="w-50 mx-auto px-4">
             <div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white">
-                <form method="POST" th:action="@{/registro}" th:object="${usuario}">
+                <form method="POST" th:action="@{/registro}" th:object="${usuario}" class="needs-validation" novalidate>
                     <div class="mb-4 mt-3">
-                        <label for="nombre" class="form-label mb-3 fs-5">Nombre:</label>
-                        <input type="text" class="form-control form-control-lg" id="nombre" placeholder="Introduzca su nombre. . ." th:field="*{nombre}">
+                        <label for="nombre" class="form-label mb-3 fs-5">Nombre: *</label>
+                        <input type="text" class="form-control form-control-lg" id="nombre" placeholder="Introduzca su nombre. . ." th:field="*{nombre}" required 
+                            minlength="2">
+                        <div class="invalid-feedback">Por favor, introduce tu nombre.</div>
                     </div>
                     <div class="mb-4">
-                        <label for="email" class="form-label mb-3 fs-5">Correo @:</label>
-                        <input type="email" class="form-control form-control-lg" id="email" placeholder="Introduzca su email. . ." th:field="*{email}">
+                        <label for="email" class="form-label mb-3 fs-5">Correo @: *</label>
+                        <input type="email" class="form-control form-control-lg" id="email" placeholder="Introduzca su email. . ." th:field="*{email}" required>
+                        <div class="invalid-feedback">Introduce un correo electrónico válido (ej: usuario@gmail.com).</div>
                     </div>
                     <div class="mb-4">
-                        <label for="telefono" class="form-label mb-3 fs-5">Teléfono:</label>
-                        <input type="text" class="form-control form-control-lg" id="telefono" placeholder="Introduzca su número de teléfono. . ." th:field="*{telefono}">
+                        <label for="telefono" class="form-label mb-3 fs-5">Teléfono: *</label>
+                        <input type="text" class="form-control form-control-lg" id="telefono" placeholder="Introduzca su número de teléfono. . ." th:field="*{telefono}"required 
+                            pattern="^[0-9]{9}$">
+                        <div class="invalid-feedback">El teléfono debe tener 9 números.</div>
                     </div>
                     <div class="mb-4">
-                        <label for="pwd" class="form-label mb-3 fs-5">Contraseña:</label>
-                        <input type="password" class="form-control form-control-lg" id="pwd" placeholder="Introduzca su contraseña. . ." th:field="*{password}">
+                        <label for="pwd" class="form-label mb-3 fs-5">Contraseña: *</label>
+                        <input type="password" class="form-control form-control-lg" id="pwd" placeholder="Introduzca su contraseña. . ." th:field="*{password}" required 
+                            minlength="4">
+                        <div class="invalid-feedback">La contraseña es obligatoria y debe tener al menos 4 caracteres.</div>
                     </div>
 
                     <div class="d-flex my-3">

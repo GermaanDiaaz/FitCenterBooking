@@ -2,6 +2,7 @@ package com.salesianostriana.dam.fitcenterbooking.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import com.salesianostriana.dam.fitcenterbooking.model.Usuario;
 import com.salesianostriana.dam.fitcenterbooking.service.ServiceReserva;
 import com.salesianostriana.dam.fitcenterbooking.service.ServiceUsuario;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Controller 
@@ -49,8 +51,15 @@ public class ControllerReserva {
 	}
 	
 	@PostMapping("/reservas/editar/{codigo}")
-	public String procesarEdicion(@PathVariable("codigo") Long codigo, @ModelAttribute("reserva") Reserva reservaEditada,
-			@RequestParam("usuarioId") Long idUsuario) {
+	public String procesarEdicion(@PathVariable("codigo") Long codigo, 
+			@Valid @ModelAttribute("reserva") Reserva reservaEditada,
+			BindingResult bindingResult,
+			@RequestParam("usuarioId") Long idUsuario, Model model) {
+		
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("usuarios", serviceUsuario.findAll());
+			return "formReserva";
+		}
 		
 		Reserva resOriginal = service.buscarPorID(codigo);
 		Usuario user = serviceUsuario.buscarPorID(idUsuario);

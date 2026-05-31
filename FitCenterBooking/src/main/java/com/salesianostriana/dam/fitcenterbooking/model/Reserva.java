@@ -12,10 +12,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data 
 @AllArgsConstructor 
@@ -28,10 +32,14 @@ public class Reserva {
 	@GeneratedValue
 	private Long codigo;
 	
+	@NotNull(message = "La fecha de la reserva es obligatoria.")
+    @FutureOrPresent(message = "La fecha de la reserva no puede ser pasada.")
 	@DateTimeFormat(pattern = "dd-MM-yyyy'T'HH:mm")
 	private LocalDateTime fecha;
 	private double precioTotal;
 	
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;

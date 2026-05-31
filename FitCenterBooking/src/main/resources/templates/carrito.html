@@ -11,6 +11,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
 	<link rel="stylesheet"  href="../static/css/general.css" th:href="@{/css/general.css}">
+
+    <script th:src="@{/js/validaciones.js}" defer></script>
 </head>
 <body class="bg-secondary">
 	<div th:replace="~{fragments/general :: cabecera}"></div>
@@ -67,10 +69,12 @@
                     <div class="card p-4 rounded-4 bg-dark bg-opacity-75 text-white shadow border-0">
                         <h4 class="text-info mb-4 border-bottom border-secondary pb-2">Resumen de Reserva</h4>
                         
-                        <form th:action="@{/carrito/confirmar}" method="POST" th:if="${not #lists.isEmpty(listaCarrito)}">
+                        <form th:action="@{/carrito/confirmar}" method="POST" th:if="${not #lists.isEmpty(listaCarrito)}" class="needs-validation" novalidate>
                             <div class="mb-4">
                                 <label for="fecha" class="form-label text-white-50 fw-bold fs-5">¿Qué día y hora vas a asistir? *</label>
-                                <input type="datetime-local" class="form-control form-control-lg bg-secondary bg-opacity-25 text-white border-secondary mb-5" id="fecha" name="fecha" required>
+                                <input type="datetime-local" class="form-control form-control-lg bg-secondary bg-opacity-25 text-white border-secondary mb-3" id="fecha" name="fecha" required 
+                                    th:value="${fecha != null ? fecha : ''}">
+                                <div th:if="${errorFecha}" class="text-danger small fw-bold mt-1" th:text="${errorFecha}"></div>
                             </div>
                     
                             <div class="mb-4">
@@ -92,8 +96,7 @@
 
                                 <a th:href="@{/}" class="btn btn-outline-light rounded-3 mx-auto mt-3">
                                     Seguir Añadiendo
-                                </a>
-                                    
+                                </a>             
                             </div> 
                         </form>
                     </div>

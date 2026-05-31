@@ -36,7 +36,7 @@ public class DataSeed {
         
         if (usuarioRepo.count() == 0 && actividadRepo.count() == 0 && reservaRepo.count() == 0) {
             
-            System.out.println("Metemos datos autogenerados.");
+            System.out.println("Cargando los Datos Autogenerados.");
             
             // --------------- Usuarios ---------------
             
@@ -67,7 +67,7 @@ public class DataSeed {
                     .descripcion("Encuentra tu equilibrio perfecto entre cuerpo y mente. En nuestras sesiones trabajarás la flexibilidad, la fuerza muscular profunda y la corrección postural a través de asanas (posturas) combinadas con el control de la respiración. Una actividad ideal tanto para liberar el estrés acumulado durante el día como para mejorar tu bienestar físico general en un ambiente relajado y guiado por profesionales.")
                     .capacidad(25)
                     .precio(10.00)
-                    .imagenUrl("/img/Yoga.png")
+                    .imagenUrl("http://localhost:9000/img/Yoga.png")
                     .build();
             
             actividadRepo.save(yoga);
@@ -77,7 +77,7 @@ public class DataSeed {
                     .descripcion("Lleva tu rendimiento al siguiente nivel con nuestro entrenamiento de alta intensidad. Esta disciplina combina ejercicios funcionales, levantamiento olímpico, gimnasia y trabajo cardiovascular en sesiones constantemente variadas. Está diseñado para adaptase a cualquier nivel de condición física, desafiando tus límites diarios, quemando calorías y desarrollando una fuerza y resistencia brutales en comunidad.")
                     .capacidad(20)
                     .precio(12.50)
-                    .imagenUrl("/img/Crossfit.png")
+                    .imagenUrl("http://localhost:9000/img/Crossfit.png")
                     .build();
             
             actividadRepo.save(crossfit);
@@ -87,7 +87,7 @@ public class DataSeed {
                     .descripcion("Mejora tu resistencia cardiovascular y tonifica cada grupo muscular sin impacto en las articulaciones dentro de nuestras piscinas climatizadas. Nuestras sesiones están estructuradas para perfeccionar la técnica de los diferentes estilos, aumentar tu capacidad pulmonar y ofrecer un entrenamiento de cuerpo completo de alta eficiencia. Perfecto tanto para nadadores avanzados como para mantenimiento.")
                     .capacidad(20)
                     .precio(15.25)
-                    .imagenUrl("/img/Natacion.png")
+                    .imagenUrl("http://localhost:9000/img/Natacion.png")
                     .build();
             
             actividadRepo.save(natacion);
@@ -96,14 +96,14 @@ public class DataSeed {
             // --------------- Reservas ---------------
             
             Reserva reserva1 = Reserva.builder()
-            		.fecha(LocalDateTime.of(2026, 6, 02, 19, 30))
+            		.fecha(LocalDateTime.now().plusDays(2))
                     .usuario(cliente)
                     .build();
             
             reservaRepo.save(reserva1);
             
             Reserva reserva2 = Reserva.builder()
-            		.fecha(LocalDateTime.of(2026, 6, 10, 19, 30))
+            		.fecha(LocalDateTime.now().plusDays(5))
                     .usuario(cliente)
                     .build();
             
@@ -131,6 +131,6 @@ public class DataSeed {
             reservaRepo.save(reserva1);
         }
         
-        System.out.println("Datos autogenerados.");
+        System.out.println("Datos Autogenerados Correctamente.");
     }
 }

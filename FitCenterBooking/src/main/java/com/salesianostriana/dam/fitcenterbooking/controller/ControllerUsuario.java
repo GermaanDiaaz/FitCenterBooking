@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import com.salesianostriana.dam.fitcenterbooking.security.RolesUsuario;
 import com.salesianostriana.dam.fitcenterbooking.service.ServiceReserva;
 import com.salesianostriana.dam.fitcenterbooking.service.ServiceUsuario;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Controller 
@@ -53,8 +55,13 @@ public class ControllerUsuario {
 	}
 	
 	@PostMapping("/registro")
-    public String procesarRegistro(@ModelAttribute("usuario") Usuario newUsuario) {
-        
+	public String procesarRegistro(@Valid @ModelAttribute("usuario") Usuario newUsuario, 
+			BindingResult bindingResult) {
+		
+		if (bindingResult.hasErrors()) {
+	        return "registro";
+	    }
+		
 		newUsuario.setRol(RolesUsuario.CLIENTE);
 		newUsuario.setPassword(encoder.encode(newUsuario.getPassword()));
 		service.save(newUsuario);
@@ -101,7 +108,12 @@ public class ControllerUsuario {
 	}
 	
 	@PostMapping("/usuarios/editar")
-	public String procesarUsuario(@ModelAttribute("usuario") Usuario newUser) {
+	public String procesarUsuario(@Valid @ModelAttribute("usuario") Usuario newUser, 
+			BindingResult bindingResult) {
+		
+		if (bindingResult.hasErrors()) {
+	        return "formUsuario";
+	    }
 		
 		service.edit(newUser);
 		

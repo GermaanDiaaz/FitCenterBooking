@@ -11,6 +11,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
 	<link rel="stylesheet"  href="../static/css/general.css" th:href="@{/css/general.css}">
+
+    <script th:src="@{/js/validaciones.js}" defer></script>
 </head>
 <body class="bg-secondary">
 	<div th:replace="~{fragments/general :: cabecera}"></div>
@@ -21,32 +23,47 @@
 		</div>
         <div class="w-50 mx-auto px-4">
             <div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white">
-                <form method="POST" th:action="@{/actividades/nueva}" th:object="${actividad}">
+                <form method="POST" th:action="@{/actividades/nueva}" th:object="${actividad}" class="needs-validation" novalidate>
+
+                    <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger py-2 px-3 mb-4">
+                        <p class="fw-bold m-0">Por favor, corrige los errores:</p>
+                        <ul class="m-0 mt-1 sm">
+                            <li th:each="err : ${#fields.allErrors()}" th:text="${err}">Error</li>
+                        </ul>
+                    </div>
 
                     <input type="hidden" th:field="*{id}">
 
                     <div class="mb-4 mt-3">
                         <label for="nombre" class="form-label mb-3 fs-5">Nombre: *</label>
-                        <input type="text" class="form-control form-control-lg" id="nombre" placeholder="Introduzca el nombre de la actividad. . ." th:field="*{nombre}" required>
+                        <input type="text" class="form-control form-control-lg" id="nombre" placeholder="Introduzca el nombre de la actividad. . ." th:field="*{nombre}" required
+                            minlength="1" maxlength="50">
+                        <div class="invalid-feedback">El nombre es obligatorio y debe tener como máximo 25 caracteres.</div>
                     </div>
                     <div class="mb-4">
                         <label for="descripcion" class="form-label mb-3 fs-5">Descripción: *</label>
                         <textarea class="form-control form-control-lg" id="descripcion" placeholder="Introduzca una descripción para la actividad. . ." th:field="*{descripcion}" required></textarea>
+                        <div class="invalid-feedback">La descripción es obligatoria.</div>
                     </div>
-                    <div class="d-flex">
-                        <div class="mb-4 me-5">
+                    <div class="d-flex gap-4">
+                        <div class="mb-4 flex-fill">
                             <label for="capacidad" class="form-label mb-3 fs-5">Aforo Máximo: *</label>
-                            <input type="number" class="form-control form-control-lg" id="capacidad" placeholder="Aforo máximo. . ." th:field="*{capacidad}" required>
+                            <input type="number" class="form-control form-control-lg" id="capacidad" placeholder="Aforo máximo. . ." th:field="*{capacidad}" required
+                                min="1" max="50" pattern="^[0-9]">
+                            <div class="invalid-feedback">El aforo debe tener entre 1 y 50 personas.</div>
                         </div>
-                        <div class="mb-4">
+                        <div class="mb-4 flex-fill">
                             <label for="precio" class="form-label mb-3 fs-5">Precio: *</label>
-                            <input type="text" class="form-control form-control-lg" id="precio" placeholder="Precio de la Actividad. . ." th:field="*{precio}" required>
+                            <input type="text" class="form-control form-control-lg" id="precio" placeholder="Precio de la Actividad. . ." th:field="*{precio}" required
+                                min="0" pattern="^[0-9]+([.,][0-9]{1,2})?$">
+                            <div class="invalid-feedback">El precio es obligatorio y no puede ser negativo.</div>
                         </div>
                     </div>
                     
                     <div class="mb-4">
                         <label for="imagenUrl" class="form-label mb-3 fs-5">URL de la Imagen:</label>
                         <input type="text" class="form-control form-control-lg" id="imagenUrl" placeholder="Introduzca la URL de la imagen de la actividad. . ." th:field="*{imagenUrl}">
+                        <div class="invalid-feedback">La URL introducida debe ser válida.</div>
                     </div>
 
                     <button type="submit" class="btn btn-info d-block mx-auto my-3 w-75" th:text="${actividad.id != null} ? 'Guardar Cambios' : 'Añadir Actividad'">

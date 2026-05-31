@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,7 @@ import com.salesianostriana.dam.fitcenterbooking.service.ServiceReserva;
 import com.salesianostriana.dam.fitcenterbooking.service.ServiceUsuario;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Controller 
@@ -37,8 +39,8 @@ public class ControllerCarrito {
 	private final ServiceUsuario serviceUsuario;
 
 
-	@SuppressWarnings("unchecked")
 	private List<Actividad> obtenerCarrito(HttpSession sesion) {
+		@SuppressWarnings("unchecked")
 		List<Actividad> carrito = (List<Actividad>) sesion.getAttribute("carrito");
 		if (carrito == null) {
 			carrito = new ArrayList<>();
@@ -47,18 +49,21 @@ public class ControllerCarrito {
 		return carrito;
 	}
 	
+	private void cargarDatosCarrito(Model model, HttpSession sesion) {
+		List<Actividad> actAgregadas = obtenerCarrito(sesion);
+		double total = 0.0;
+		for(Actividad a : actAgregadas) {
+			total += a.getPrecio();
+		}
+		model.addAttribute("listaCarrito", actAgregadas);		
+		model.addAttribute("totalCarrito", total);
+	}
+	
 	@GetMapping("/carrito")
 	public String verCarrito (Model model, HttpSession sesion) {
-			
-		List<Actividad> actAgregadas = obtenerCarrito(sesion);
-	    
-	    double total = 0.0;
-	    for(Actividad a : actAgregadas) {
-	        total += a.getPrecio();
-	    }
-	    
-	    model.addAttribute("listaCarrito", actAgregadas);		
-	    model.addAttribute("totalCarrito", total);
+
+		cargarDatosCarrito(model, sesion);
+		
 	    return "carrito";
 	}
 	
@@ -83,18 +88,22 @@ public class ControllerCarrito {
 	}
 	
 	@PostMapping("/carrito/confirmar")
-	public String confirmarReserva(@RequestParam("fecha") String fecha, HttpSession sesion, 
-			@AuthenticationPrincipal Usuario usuarioLogueado, RedirectAttributes redirect) {
-	    
+	public String confirmarReserva(@RequestParam("fecha") LocalDateTime fecha, HttpSession sesion, 
+			@AuthenticationPrincipal Usuario usuarioLogueado, RedirectAttributes redirect, Model model) {
+		
+		if (fecha.isBefore(LocalDateTime.now())) {
+			cargarDatosCarrito(model, sesion);
+			
+	        model.addAttribute("errorFecha", "La fecha no puede ser pasada.");
+	        model.addAttribute("fecha", fecha); 
+	        return "carrito"; 
+	    }
+		
 	    List<Actividad> actividadesCarrito = obtenerCarrito(sesion);
 	    
-	    LocalDateTime fechaSeleccionada = LocalDateTime.parse(fecha);
+	    LocalDateTime fechaSeleccionada = fecha;
 	    
-	    try {
-	    	if (fechaSeleccionada.isBefore(LocalDateTime.now())) {
-		        throw new ReservaInvalidaException();
-		    }
-		    	    
+	    try {	    
 		    Reserva nuevaReserva = Reserva.builder()
 		            .fecha(fechaSeleccionada)
 		            .usuario(usuarioLogueado)
@@ -154,9 +163,15 @@ public class ControllerCarrito {
 	
 	@PostMapping("/misReservas/editar/{codigo}")
 	public String procesarEdicion(@PathVariable("codigo") Long codigo, 
-			@ModelAttribute("reserva") Reserva reservaEditada,
+			@Valid @ModelAttribute("reserva") Reserva reservaEditada,
+			BindingResult bindingResult,
 			@RequestParam(value = "usuarioId", required = false) Long idUsuario, 
-			@AuthenticationPrincipal Usuario usuarioLogueado) {
+			@AuthenticationPrincipal Usuario usuarioLogueado, Model model) {
+		
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("usuarios", serviceUsuario.findAll());
+			return "formReserva";
+		}
 		
 		Reserva resOriginal = serviceReserva.buscarPorID(codigo);
 	    

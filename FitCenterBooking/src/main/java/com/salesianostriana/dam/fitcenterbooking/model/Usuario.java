@@ -16,6 +16,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,15 +32,28 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Usuario implements UserDetails{
 
+	private static final long serialVersionUID = 1L;
 
 	@Id 
 	@GeneratedValue
 	private Long id;
 	
-	private String nombre;
+	@NotBlank(message = "El nombre no puede estar vacío")
+	@Size(min = 1, max = 20, message = "El nombre debe tener entre 1 y 20 caracteres")
+	private String nombre;	
+	
+	@NotBlank(message = "El correo electrónico es obligatorio")
+	@Email(message = "Debe introducir un formato de correo válido")
 	private String email;
+	
+	@NotBlank(message = "El teléfono es obligatorio")
+	@Pattern(regexp = "^[0-9]{9}$", message = "El teléfono debe tener 9 dígitos")
 	private String telefono;
+	
+	@NotBlank(message = "La contraseña no puede estar vacía")
+	@Size(min = 4, message = "La contraseña debe tener al menos 4 caracteres")
 	private String password;
+	
 	
 	@Enumerated(EnumType.STRING)
 	private RolesUsuario rol;
@@ -53,6 +70,6 @@ public class Usuario implements UserDetails{
 
 	@Override
 	public String getUsername() {
-		return this.nombre;
+		return this.email;
 	}
 }

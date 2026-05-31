@@ -2,6 +2,7 @@ package com.salesianostriana.dam.fitcenterbooking.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import com.salesianostriana.dam.fitcenterbooking.model.Actividad;
 import com.salesianostriana.dam.fitcenterbooking.service.ServiceActividad;
 import com.salesianostriana.dam.fitcenterbooking.service.ServiceReserva;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Controller 
@@ -56,8 +58,13 @@ public class ControllerActividad {
     }
 	
 	@PostMapping("/actividades/nueva")
-    public String procesarRegistro(@ModelAttribute("actividad") Actividad newActividad) {
+    public String procesarRegistro(@Valid @ModelAttribute("actividad") Actividad newActividad, 
+    		BindingResult bindingResult) {
         
+		if (bindingResult.hasErrors()) {
+	        return "formActividad"; 
+	    }
+		
 		service.save(newActividad);
 		
         return "redirect:/actividades"; 
