@@ -1,5 +1,7 @@
 package com.salesianostriana.dam.fitcenterbooking.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.salesianostriana.dam.fitcenterbooking.exception.ActividadNotFoundException;
@@ -14,4 +16,9 @@ public class ServiceActividad extends BaseServiceImpl<Actividad, Long, Repositor
         return repository.findById(id)
                 .orElseThrow(() -> new ActividadNotFoundException(id));
     }
+	
+	
+	public List<Actividad>buscarPopulares(){
+		return repository.findActividadesMasPopulares();
+	}
 }

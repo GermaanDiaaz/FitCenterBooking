@@ -39,7 +39,7 @@ public class ControllerActividad {
 	}
 	
 	@GetMapping("/actividad/{id}")
-	public String mostrarActividad (@PathVariable("id") Long id,Model model) {
+	public String mostrarActividad (@PathVariable("id") Long id, Model model) {
 		
 		Actividad a = service.buscarPorID(id);
 		

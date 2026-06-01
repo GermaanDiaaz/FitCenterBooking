@@ -30,4 +30,8 @@ public class ServiceUsuario extends BaseServiceImpl<Usuario, Long, RepositoryUsu
 	    return repository.findByActivoTrue();
 	}
 	
+	public int contarActivos() {
+		return repository.countByActivoTrue();
+	}
+	
 }

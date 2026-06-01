@@ -14,4 +14,7 @@ public interface RepositoryUsuario extends JpaRepository<Usuario, Long>{
 	boolean existsByEmail(String email);
 	
 	List<Usuario> findByActivoTrue();
+	
+	
+	int countByActivoTrue();
 }

@@ -37,4 +37,8 @@ public class ServiceReserva extends BaseServiceImpl<Reserva, Long, RepositoryRes
 	public int obtenerPlazasOcupadas(Long actividadId) {
 	    return repository.contarPlazasReservadas(actividadId);
 	}
+	
+	public List<Reserva> ordenarPorFecha(){
+		return repository.findReservasOrdenadasPorFecha();
+	}
 }

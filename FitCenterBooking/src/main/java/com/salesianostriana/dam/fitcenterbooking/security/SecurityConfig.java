@@ -25,7 +25,7 @@ public class SecurityConfig {
                 (authz) -> authz
                 	.requestMatchers("/", "/login", "/registro", "/css/**", "/js/**", "/img/**").permitAll()
                 	.requestMatchers("/actividad/**", "/carrito/**", "/misReservas/**").authenticated() 
-                	.requestMatchers("/reservas/**", "/usuarios/**", "/actividades/**").hasRole("ADMIN")
+                	.requestMatchers("/reservas/**", "/usuarios/**", "/actividades/**", "/estadisticas/**").hasRole("ADMIN")
                     .anyRequest().permitAll() 
                 )
                 .requestCache(cache -> {

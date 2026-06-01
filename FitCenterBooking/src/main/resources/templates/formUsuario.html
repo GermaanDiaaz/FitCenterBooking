@@ -24,7 +24,7 @@
 		</div>
         <div class="w-50 mx-auto px-4">
             <div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white sombra">
-                <form method="POST" th:action="@{/usuarios/editar}" th:object="${usuario}" class="needs-validation" novalidate>
+                <form method="POST" th:action="${action}" th:object="${usuario}" class="needs-validation" novalidate>
 
                     <input type="hidden" th:field="*{id}">
                     <input type="hidden" th:field="*{password}"> 
@@ -49,6 +49,26 @@
                         <input type="text" class="form-control form-control-lg" id="telefono" placeholder="Introduzca el número de teléfono. . ." th:field="*{telefono}" required 
                             pattern="^[0-9]{9}$">
                         <div class="invalid-feedback">El teléfono debe tener 9 números.</div>
+                    </div>
+
+                    <div class="p-3 mb-4 rounded-3 bg-secondary bg-opacity-25 border border-secondary">
+                        <p class="text-info small mb-3"><i class="bi bi-info-circle"></i> Rellena estos campos solo si deseas cambiar la contraseña actual.</p>
+                        
+                        <div class="alert alert-danger p-2 small" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+
+                        <div class="d-flex gap-4">
+                            <div class="mb-3 flex-fill">
+                                <label for="pwdActual" class="form-label fs-6">Contraseña Actual:</label>
+                                <input type="password" class="form-control" id="pwdActual" name="passwordActual" placeholder="Escriba su contraseña actual"
+                                    minlength="4">
+                            </div>
+                            <div class="mb-3 flex-fill">
+                                <label for="pwdNueva" class="form-label fs-6">Contraseña Nueva:</label>
+                                <input type="password" class="form-control" id="pwdNueva" name="passwordNueva" placeholder="Mínimo 4 caracteres" 
+                                    minlength="4">
+                            </div>
+                        </div>
+                        
                     </div>
                     
                     <button type="submit" class="btn btn-info d-block mx-auto my-3 w-75"
