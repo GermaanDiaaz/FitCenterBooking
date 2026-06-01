@@ -43,6 +43,10 @@ public class ControllerActividad {
 		
 		Actividad a = service.buscarPorID(id);
 		
+		if (a == null) {
+	        return "redirect:/";
+	    }
+		
 		int ocupadas = serviceReserva.obtenerPlazasOcupadas(id);
 	    
 	    model.addAttribute("actividad", a);
@@ -74,6 +78,12 @@ public class ControllerActividad {
 	@GetMapping("/actividades/eliminar/{id}")
 	public String eliminarActividad(@PathVariable("id") Long id, RedirectAttributes redirect) {
 		
+		Actividad a = service.buscarPorID(id);
+
+		if (a == null) {
+	        return "redirect:/actividades";
+	    }
+		
 		if (serviceReserva.tieneReservaAsignada(id)) { 
 			
 			redirect.addFlashAttribute("error", "No puedes eliminar una actividad asociada a reservas existentes.");
@@ -89,6 +99,10 @@ public class ControllerActividad {
 	public String editarActividad(@PathVariable("id") Long id, Model model) {
 		
 		Actividad a = service.buscarPorID(id);
+		
+		if (a == null) {
+	        return "redirect:/actividades";
+	    }
         model.addAttribute("actividad", a);
 		
 		return "formActividad";

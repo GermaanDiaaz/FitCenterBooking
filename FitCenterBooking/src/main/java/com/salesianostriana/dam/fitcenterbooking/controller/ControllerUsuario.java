@@ -86,6 +86,9 @@ public class ControllerUsuario {
 	public String eliminarUsuario(@PathVariable("id") Long id, RedirectAttributes redirect) {
 		
 		Usuario usuarioABorrar = service.buscarPorID(id);
+		if (usuarioABorrar == null) {
+	        return "redirect:/usuarios";
+	    }
 		
 		if (usuarioABorrar.getRol() == RolesUsuario.ADMIN) {
 		    redirect.addFlashAttribute("error", "No se puede eliminar al administrador del sistema");
@@ -116,6 +119,10 @@ public class ControllerUsuario {
 	public String editarUsuario(@PathVariable("id") Long id, Model model) {
 		
 		Usuario u = service.buscarPorID(id);
+		
+		if (u == null) {
+	        return "redirect:/misReservas";
+	    }
         model.addAttribute("usuario", u);
         model.addAttribute("action", "/usuarios/editar/{id}");
 		

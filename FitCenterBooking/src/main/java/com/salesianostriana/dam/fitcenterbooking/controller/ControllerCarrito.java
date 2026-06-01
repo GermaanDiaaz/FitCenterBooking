@@ -70,8 +70,13 @@ public class ControllerCarrito {
 	
 	@GetMapping("/carrito/add/{id}")
 	public String añadirAlCarrito(@PathVariable("id") Long id, HttpSession sesion) {
+		
 		List<Actividad> carrito = obtenerCarrito(sesion);
 		Actividad a = serviceActividad.buscarPorID(id);
+		
+		if (a == null) {
+	        return "redirect:/";
+	    }
 	    
 		boolean yaExiste = false;
 	    
@@ -151,6 +156,10 @@ public class ControllerCarrito {
         
         Reserva r = serviceReserva.buscarPorID(codigo);
         
+        if (r == null) {
+            return "redirect:/carrito";
+        }
+        
         if (usuarioLogueado.getRol() != RolesUsuario.ADMIN && !r.getUsuario().getId().equals(usuarioLogueado.getId())) {
             return "redirect:/misReservas";
         }
@@ -173,6 +182,10 @@ public class ControllerCarrito {
 			@AuthenticationPrincipal Usuario usuarioLogueado) {
 		
 		Reserva r = serviceReserva.buscarPorID(codigo);
+		
+		if (r == null) {
+	        return "redirect:/misReservas";
+	    }
 		
 		if (!r.getUsuario().getId().equals(usuarioLogueado.getId())) {
 	        return "redirect:/misReservas";
@@ -233,8 +246,12 @@ public class ControllerCarrito {
 	    
 	    List<Actividad> carrito = obtenerCarrito(sesion);
 	    
-	    carrito.removeIf(actividad -> actividad.getId().equals(id));
+	    boolean eliminado = carrito.removeIf(actividad -> actividad.getId().equals(id));
 	    
+	    if (!eliminado) {
+	        return "redirect:/carrito";
+	    }
+	    	    
 	    return "redirect:/carrito";
 	}
 	

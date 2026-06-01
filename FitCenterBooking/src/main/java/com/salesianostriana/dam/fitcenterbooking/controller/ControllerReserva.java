@@ -34,6 +34,12 @@ public class ControllerReserva {
 	@GetMapping("/reservas/eliminar/{codigo}")
 	public String eliminarActividad(@PathVariable("codigo") Long codigo) {
 		
+		Reserva r = service.buscarPorID(codigo);
+		
+		if (r == null) {
+	        return "redirect:/reservas";
+	    }
+		
 		service.deleteById(codigo); 
 		
 		return "redirect:/reservas";
@@ -43,6 +49,10 @@ public class ControllerReserva {
 	public String editarActividad(@PathVariable("codigo") Long codigo, Model model) {
 		
 		Reserva r = service.buscarPorID(codigo);
+		
+		if (r == null) {
+	        return "redirect:/reservas";
+	    }
 		
         model.addAttribute("reserva", r);
         model.addAttribute("usuarios", serviceUsuario.findAll());

@@ -23,8 +23,8 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http){
         http.authorizeHttpRequests(
                 (authz) -> authz
-                	.requestMatchers("/", "/login", "/registro", "/css/**", "/js/**", "/img/**").permitAll()
-                	.requestMatchers("/actividad/**", "/carrito/**", "/misReservas/**").authenticated() 
+                	.requestMatchers("/", "/login", "/registro", "/css/**", "/js/**", "/img/**", "/error/**").permitAll()
+                	.requestMatchers("/actividad/**", "/carrito/**", "/misReservas/**", "/reserva/ticket/**").authenticated() 
                 	.requestMatchers("/reservas/**", "/usuarios/**", "/actividades/**", "/estadisticas/**").hasRole("ADMIN")
                     .anyRequest().permitAll() 
                 )
