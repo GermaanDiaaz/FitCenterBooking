@@ -131,20 +131,33 @@ public class ControllerCarrito {
 		    }
 		            
 		    nuevaReserva.setPrecioTotal(nuevaReserva.calcularPrecioTotal());
-		    serviceReserva.save(nuevaReserva);
+		    
+		    Reserva reservaGuardada = serviceReserva.save(nuevaReserva);
 		    
 		    sesion.removeAttribute("carrito");
 		    
-		    return "redirect:/misReservas";
-		    
+		    return "redirect:/reserva/ticket/" + reservaGuardada.getCodigo();
+		    		    
 	    }catch (ReservaInvalidaException | CapacidadExcedidaException e) {
 	    	
 	        redirect.addFlashAttribute("errorCarrito", e.getMessage());
 	        return "redirect:/carrito";
-	    }
-	    
-	    
+	    }    
 	}
+	
+	@GetMapping("/reserva/ticket/{codigo}")
+    public String verTicket(@PathVariable("codigo") Long codigo, Model model, 
+                            @AuthenticationPrincipal Usuario usuarioLogueado) {
+        
+        Reserva r = serviceReserva.buscarPorID(codigo);
+        
+        if (usuarioLogueado.getRol() != RolesUsuario.ADMIN && !r.getUsuario().getId().equals(usuarioLogueado.getId())) {
+            return "redirect:/misReservas";
+        }
+        
+        model.addAttribute("reserva", r);
+        return "ticket";
+    }
 	
 	@GetMapping("/misReservas")
 	public String verMisReservas (Model model, @AuthenticationPrincipal Usuario usuarioLogueado) {
@@ -224,6 +237,9 @@ public class ControllerCarrito {
 	    
 	    return "redirect:/carrito";
 	}
+	
+	
+	
 	
 	
 }

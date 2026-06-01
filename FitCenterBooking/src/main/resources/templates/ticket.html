@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org">
+ 	
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+    <title>FitCenterBooking</title>
+	
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+	<link rel="stylesheet"  href="../static/css/general.css" th:href="@{/css/general.css}">
+</head>
+<body class="bg-secondary">
+	<div th:replace="~{fragments/general :: cabecera}"></div>
+
+	<main>
+		<div class="container bg-opacity-75 w-50 rounded-4 my-5 bg-dark p-2 sombra">
+            <h1 class="text-center text-white">¡Reserva Confirmada!</h1>
+        </div>
+
+        <div class="w-50 mx-auto px-4">
+            <div class="card p-5 rounded-4 bg-dark bg-opacity-75 text-white mb-5 card-hover">
+                
+                <div class="text-center border-bottom border-secondary pb-4 mb-4">
+                    <h3 class="text-info fw-bold text-uppercase mb-1">Fit Center Booking</h3>
+                    <p class="text-white-50 small mb-3">Tu centro deportivo de confianza</p>
+                    <span class="badge bg-secondary p-2 fs-6">Nº de Localizador: #<span th:text="${reserva.codigo}">1001</span></span>
+                </div>
+
+                <div class="row mb-4 bg-secondary bg-opacity-25 p-3 rounded-3 border border-secondary mx-0">
+                    <div class="col-md-6 mb-2 mb-md-0">
+                        <h6 class="text-info text-uppercase small fw-bold">Titular de la reserva</h6>
+                        <p class="m-0 fs-5" th:text="${reserva.usuario.nombre}">Admin</p>
+                        <p class="m-0 text-white-50 small" th:text="${reserva.usuario.email}">admin@admin.com</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <h6 class="text-info text-uppercase small fw-bold">Fecha y Hora de Asistencia</h6>
+                        <p class="m-0 fs-5 fw-bold text-light" th:text="${#temporals.format(reserva.fecha, 'dd/MM/yyyy HH:mm')}">02/6/2026 14:30</p>
+                    </div>
+                </div>
+
+                <h5 class="text-white-50 border-bottom border-secondary pb-2 mb-3">Servicios Contratados</h5>
+                
+                <div th:each="linea : ${reserva.actividades}" class="d-flex justify-content-between align-items-center py-2 border-bottom border-secondary border-opacity-25">
+                    <div>
+                        <p class="m-0 fw-bold text-white fs-5" th:text="${linea.actividad.nombre}">Yoga</p>
+                        <p class="m-0 text-white-50 small">Acceso ilimitado a la sesión</p>
+                    </div>
+                    <p class="m-0 fw-bold text-info fs-5" th:text="${#numbers.formatDecimal(linea.actividad.precio, 1, 2) + '€'}">12.50€</p>
+                </div>
+
+                <div class="d-flex align-items-center justify-content-between mt-4 bg-secondary bg-opacity-10 p-3 rounded-3">
+                    <h4 class="m-0 text-white fw-bold">Importe Total Abonado:</h4>
+                    <p class="fw-bold fs-3 text-success m-0" th:text="${#numbers.formatDecimal(reserva.precioTotal, 1, 2) + '€'}">12.50€</p>
+                </div>
+
+                <div class="row g-3 mt-4 pt-2 border-top border-secondary">
+                    <div class="col-sm-6">
+                        <a th:href="@{/misReservas}" class="btn btn-info w-100 py-2 rounded-pill fw-bold">
+                            Ver todas mis reservas
+                        </a>
+                    </div>
+                    <div class="col-sm-6">
+                        <button onclick="window.print()" class="btn btn-outline-info w-100 py-2 rounded-pill">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16"><path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1"/><path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/></svg>
+                            Imprimir
+                        </button>
+                    </div>
+                </div>
+                
+                <p class="text-center text-white-50 small mt-4 mb-0"><i class="bi bi-info-circle me-1"></i> Por favor, presenta este tique digital en la recepción del gimnasio al entrar.</p>
+
+            </div>
+        </div>
+	</main>
+</body>
+</html>
