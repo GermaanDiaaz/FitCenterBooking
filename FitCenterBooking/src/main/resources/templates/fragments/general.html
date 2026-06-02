@@ -47,7 +47,7 @@
 
                     <div class="d-flex me-3" sec:authorize="isAnonymous()">
                         <a type="button" class="btn btn-outline-info d-flex align-items-center" th:href="@{/login}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" class="bi bi-person-circle me-1" fill="currentColor" viewBox="0 0 16 16"><path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/></svg>
+                            <i class="bi bi-person-circle me-1"></i>
                             Login
                         </a>
                     </div>
@@ -55,14 +55,14 @@
                         <p sec:authentication="name" class="text-white text-opacity-75 my-auto me-3"></p>
 
                         <a th:href="@{/editar/perfil}" class="btn btn-outline-light d-flex align-items-center my-auto btn-sm rounded-pill me-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" class="bi bi-person-circle me-1" fill="currentColor" viewBox="0 0 16 16"><path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/></svg>
+                            <i class="bi bi-person-circle me-1"></i>
                             Editar Perfil
                         </a>
 
                         <form th:action="@{/logout}" method="POST" class="m-0">
                             <button type="submit" class="btn btn-outline-info d-flex align-items-center"
                                 onclick="return confirm('¿Estás seguro de que deseas cerrar la sesión?');">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" class="bi bi-person-circle me-1" fill="currentColor" viewBox="0 0 16 16"><path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/></svg>
+                                <i class="bi bi-person-circle me-1"></i>
                                 Logout
                             </button>
                         </form>
@@ -95,8 +95,8 @@
 
                     <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
                         <h5 class="text-uppercase mb-4 fw-bold text-info">Horario</h5>
-                        <p><i class="bi bi-clock"></i> Lun - Vie: 09:00 - 22:00</p>
-                        <p><i class="bi bi-clock"></i> Sáb -Dom: 07:00 - 23:00</p>
+                        <p>Lun - Vie: 09:00 - 22:00</p>
+                        <p>Sáb -Dom: 07:00 - 23:00</p>
                     </div>
 
                     <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
