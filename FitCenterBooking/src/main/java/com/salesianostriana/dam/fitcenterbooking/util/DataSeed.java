@@ -75,7 +75,7 @@ public class DataSeed {
             Actividad crossfit = Actividad.builder()
                     .nombre("Crossfit")
                     .descripcion("Lleva tu rendimiento al siguiente nivel con nuestro entrenamiento de alta intensidad. Esta disciplina combina ejercicios funcionales, levantamiento olímpico, gimnasia y trabajo cardiovascular en sesiones constantemente variadas. Está diseñado para adaptase a cualquier nivel de condición física, desafiando tus límites diarios, quemando calorías y desarrollando una fuerza y resistencia brutales en comunidad.")
-                    .capacidad(2)
+                    .capacidad(20)
                     .precio(12.50)
                     .imagenUrl("http://localhost:9000/img/Crossfit.png")
                     .build();
@@ -85,7 +85,7 @@ public class DataSeed {
             Actividad natacion = Actividad.builder()
                     .nombre("Natacion")
                     .descripcion("Mejora tu resistencia cardiovascular y tonifica cada grupo muscular sin impacto en las articulaciones dentro de nuestras piscinas climatizadas. Nuestras sesiones están estructuradas para perfeccionar la técnica de los diferentes estilos, aumentar tu capacidad pulmonar y ofrecer un entrenamiento de cuerpo completo de alta eficiencia. Perfecto tanto para nadadores avanzados como para mantenimiento.")
-                    .capacidad(20)
+                    .capacidad(7)
                     .precio(15.25)
                     .imagenUrl("http://localhost:9000/img/Natacion.png")
                     .build();

@@ -38,7 +38,7 @@
 		<div th:if="${not (#lists.isEmpty(listaActividades))}" class="row justify-content-center g-4 m-3">
 			
 			<div class="col-md-4 px-4" th:each="actividad : ${listaActividades}">
-				<div class="card py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white text-center card-hover">
+				<div class="card h-100 py-3 px-4 rounded-4 bg-dark bg-opacity-75 text-white text-center card-hover">
 
 					<h2 class="mb-3 text-info" th:text="${actividad.nombre}">Yoga</h2>
 					<img th:src="${not (#strings.isEmpty(actividad.imagenUrl))} ? ${actividad.imagenUrl} : @{/img/Defecto.png}" 
